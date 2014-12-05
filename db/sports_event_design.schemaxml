@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemadesigner version="6.5">
+<source>
+<database charset="utf8" collation="utf8_general_ci">sport_events</database>
+</source>
+<canvas zoom="100">
+<tables>
+<table name="comments" view="colnames">
+<left>476</left>
+<top>30</top>
+<width>105</width>
+<height>141</height>
+<sql_create_table>CREATE TABLE `comments` (
+  `_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `text` text,
+  `from` int(11) NOT NULL,
+  `tablename` char(31) NOT NULL,
+  PRIMARY KEY (`_id`),
+  KEY `Users_id` (`user_id`),
+  CONSTRAINT `Users_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="equipment" view="colnames">
+<left>701</left>
+<top>633</top>
+<width>124</width>
+<height>124</height>
+<sql_create_table>CREATE TABLE `equipment` (
+  `_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` char(255) DEFAULT NULL,
+  `icon` char(255) DEFAULT NULL,
+  PRIMARY KEY (`_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="events" view="colnames">
+<left>577</left>
+<top>456</top>
+<width>114</width>
+<height>226</height>
+<sql_create_table>CREATE TABLE `events` (
+  `_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` char(255) DEFAULT NULL,
+  `sport` int(11) DEFAULT NULL,
+  `description` text,
+  `place_id` int(11) DEFAULT NULL,
+  `date_start` datetime DEFAULT NULL,
+  `date_finish` datetime DEFAULT NULL,
+  `visible` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`_id`),
+  KEY `Sport_rel` (`sport`),
+  KEY `Place_rel` (`place_id`),
+  CONSTRAINT `Places_id` FOREIGN KEY (`place_id`) REFERENCES `places` (`_id`),
+  CONSTRAINT `Sport_rel` FOREIGN KEY (`sport`) REFERENCES `sports` (`_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="participants" view="colnames">
+<left>210</left>
+<top>440</top>
+<width>116</width>
+<height>124</height>
+<sql_create_table>CREATE TABLE `participants` (
+  `user_id` int(11) NOT NULL,
+  `event_id` int(11) NOT NULL,
+  `role` int(11) DEFAULT NULL,
+  PRIMARY KEY (`user_id`,`event_id`),
+  KEY `Eventid_rel` (`event_id`),
+  CONSTRAINT `Userid_rel` FOREIGN KEY (`user_id`) REFERENCES `users` (`_id`),
+  CONSTRAINT `Eventid_rel` FOREIGN KEY (`event_id`) REFERENCES `events` (`_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="places" view="colnames">
+<left>716</left>
+<top>109</top>
+<width>108</width>
+<height>175</height>
+<sql_create_table>CREATE TABLE `places` (
+  `_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` char(255) DEFAULT NULL,
+  `longitude` double DEFAULT NULL,
+  `latitude` double DEFAULT NULL,
+  `description` text,
+  `creator` int(11) DEFAULT NULL,
+  PRIMARY KEY (`_id`),
+  KEY `creator_id` (`creator`),
+  CONSTRAINT `creator_id` FOREIGN KEY (`creator`) REFERENCES `users` (`_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="places_equipment" view="colnames">
+<left>849</left>
+<top>373</top>
+<width>143</width>
+<height>124</height>
+<sql_create_table>CREATE TABLE `places_equipment` (
+  `pl_id` int(11) NOT NULL,
+  `eq_id` int(11) NOT NULL,
+  `count` int(11) NOT NULL,
+  PRIMARY KEY (`pl_id`,`eq_id`),
+  KEY `Equipment_id` (`eq_id`),
+  CONSTRAINT `Place_id` FOREIGN KEY (`pl_id`) REFERENCES `places` (`_id`),
+  CONSTRAINT `Equipment_id` FOREIGN KEY (`eq_id`) REFERENCES `equipment` (`_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="users" view="colnames">
+<left>350</left>
+<top>194</top>
+<width>101</width>
+<height>175</height>
+<sql_create_table>CREATE TABLE `users` (
+  `_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` char(255) DEFAULT NULL,
+  `sname` char(255) DEFAULT NULL,
+  `nickname` char(255) DEFAULT NULL,
+  `phone` char(31) DEFAULT NULL,
+  `email` char(255) DEFAULT NULL,
+  PRIMARY KEY (`_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="sports" view="colnames">
+<left>475</left>
+<top>741</top>
+<width>78</width>
+<height>124</height>
+<sql_create_table>CREATE TABLE `sports` (
+  `_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` char(1) DEFAULT NULL,
+  `icon` char(1) DEFAULT NULL,
+  `creator` int(11) DEFAULT NULL,
+  PRIMARY KEY (`_id`),
+  KEY `Creator` (`creator`),
+  CONSTRAINT `Creator` FOREIGN KEY (`creator`) REFERENCES `users` (`_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="users_auth" view="colnames">
+<left>225</left>
+<top>23</top>
+<width>100</width>
+<height>124</height>
+<sql_create_table>CREATE TABLE `users_auth` (
+  `user_id` int(11) NOT NULL,
+  `login` char(255) NOT NULL,
+  `password` char(255) NOT NULL,
+  PRIMARY KEY (`user_id`),
+  CONSTRAINT `User_id_rel` FOREIGN KEY (`user_id`) REFERENCES `users` (`_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+</tables>
+</canvas>
+</schemadesigner>
