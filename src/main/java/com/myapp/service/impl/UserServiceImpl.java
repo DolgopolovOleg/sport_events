@@ -6,6 +6,7 @@ import com.myapp.dao.UserDao;
 import com.myapp.entity.Event;
 import com.myapp.entity.Participant;
 import com.myapp.entity.User;
+import com.myapp.entity.extended.ParticipantView;
 import com.myapp.service.UserService;
 import org.hibernate.criterion.Criterion;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<User> findAllParticipantForEvent(Event event) {
+    public List<ParticipantView> findAllParticipantForEvent(Event event) {
         return participantDao.findAllParticipantForEvent(event);
     }
 

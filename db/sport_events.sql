@@ -1,6 +1,6 @@
 /*
 SQLyog Ultimate v9.50 
-MySQL - 5.5.25 : Database - sport_events
+MySQL - 5.5.23 : Database - sport_events
 *********************************************************************
 */
 
@@ -24,14 +24,17 @@ CREATE TABLE `comment` (
   `_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `text` text,
-  `from` int(11) NOT NULL,
-  `tablename` char(31) NOT NULL,
+  `created` datetime DEFAULT NULL,
+  `from` varchar(255) DEFAULT NULL,
+  `from_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`_id`),
   KEY `Users_id` (`user_id`),
   CONSTRAINT `Users_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*Data for the table `comment` */
+
+insert  into `comment`(`_id`,`user_id`,`text`,`created`,`from`,`from_id`) values (1,1,'First comment to place 1','2014-12-07 22:06:15','PLACE',1),(2,2,'Second comment to place 1','2014-12-07 22:06:46','PLACE',1),(3,1,'Comment to event 1','2014-12-07 22:07:38','EVENT',1),(4,2,'Comment to event 1','2014-12-07 22:08:29','EVENT',1);
 
 /*Table structure for table `equipment` */
 
@@ -79,15 +82,17 @@ CREATE TABLE `participant` (
   `_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `event_id` int(11) NOT NULL,
-  `role` int(11) DEFAULT NULL,
+  `role` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`_id`),
   KEY `Eventid_rel` (`event_id`),
   KEY `user_id` (`user_id`),
-  CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`_id`),
-  CONSTRAINT `event_id` FOREIGN KEY (`event_id`) REFERENCES `event` (`_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  CONSTRAINT `event_id` FOREIGN KEY (`event_id`) REFERENCES `event` (`_id`),
+  CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `participant` */
+
+insert  into `participant`(`_id`,`user_id`,`event_id`,`role`) values (1,1,1,'organizer'),(2,2,1,'participant');
 
 /*Table structure for table `place` */
 

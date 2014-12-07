@@ -6,6 +6,7 @@ import com.myapp.entity.Event;
 import com.myapp.entity.Participant;
 import com.myapp.entity.User;
 import com.myapp.entity.extended.EventView;
+import com.myapp.entity.extended.ParticipantView;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -21,14 +22,17 @@ public class ParticipantDaoImpl extends AbstractDaoImpl<Participant, Integer> im
     }
 
     @Override
-    public List<User> findAllParticipantForEvent(Event event) {
+    public List<ParticipantView> findAllParticipantForEvent(Event event) {
 
-        List<User> users = new ArrayList<User>();
+//        List<User> users = new ArrayList<User>();
         List<Participant> participantsEvents = super.findByCriteria(Restrictions.eq("event", event));
+        List<ParticipantView> participantsView = new ArrayList<ParticipantView>();
         for(Participant participant : participantsEvents){
-            users.add(participant.getUser());
+//            users.add(participant.getUser());
+            ParticipantView participantView = new ParticipantView(participant.getUser(), participant.getRole());
+            participantsView.add(participantView);
         }
-        return users;
+        return participantsView;
     }
 
     @Override
