@@ -3,10 +3,12 @@ package com.myapp.service.impl;
 import com.myapp.dao.PlaceDao;
 import com.myapp.dao.PlaceEquipmentDao;
 import com.myapp.dao.impl.PlaceEquipmentDaoImpl;
+import com.myapp.entity.Comment;
 import com.myapp.entity.Equipment;
 import com.myapp.entity.Place;
 import com.myapp.entity.PlaceEquipment;
 import com.myapp.entity.extended.PlaceView;
+import com.myapp.service.CommentService;
 import com.myapp.service.PlaceService;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class PlaceServiceImpl implements PlaceService {
 
     @Autowired
     PlaceEquipmentDao placeEquipmentDao;
+
+    @Autowired
+    CommentService commentService;
 
     @Override
     public List<Place> findByCreatorId(Integer creatorId) {
@@ -50,7 +55,9 @@ public class PlaceServiceImpl implements PlaceService {
     public PlaceView getPlaceViewByPlaceId(Integer placeId) {
         Place place = placeDao.findById(placeId);
         Map<Equipment, Integer> equipments = placeEquipmentDao.findEquipmentsForPlace(place);
-        return new PlaceView(place, equipments);
+
+        List<Comment> comments = commentService.findByFromAndFromId("PLACE", placeId);
+        return new PlaceView(place, equipments, comments);
     }
 
     @Override

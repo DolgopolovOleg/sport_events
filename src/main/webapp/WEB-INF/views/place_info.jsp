@@ -7,7 +7,7 @@
 <tiles:insertDefinition name="defaultTemplate">
     <tiles:putAttribute name="body">
 
-        <c:set var="place" value="${placeViewView.place}" />
+        <c:set var="place" value="${placeView.place}" />
 
 
         <div class="body">
@@ -16,15 +16,31 @@
 
             <p>${place.name}</p>
             <ul>
-                <li><u>Координаты</u> : ${place.longitude} - ${place.latitude}</li>
-                <li><u>Описание</u> :
+                <li>
+                    <u>Координаты</u> : ${place.longitude} - ${place.latitude}
+                </li>
+                <li>
+                    <u>Описание</u> :
                     <p>${place.description}</p>
                 </li>
-                <li><u>Создатель</u> : ${place.creator.name}</li>
-                <li><u>Оборудование</u> :
+                <li>
+                    <u>Создатель</u> : ${place.creator.name}
+                </li>
+                <li>
+                    <u>Оборудование:</u> :
                     <ul>
-                        <c:forEach items="${placeViewView.equipments}" var="equipment">
+                        <c:forEach items="${placeView.equipments}" var="equipment">
                             <li><b>${equipment.key.name}</b> x ${equipment.value}</li>
+                        </c:forEach>
+                    </ul>
+                </li>
+                <li>
+                    <u>Комменты</u> :
+                    <ul>
+                        <c:forEach items="${placeView.comments}" var="comment">
+                            <li><b>${comment.user.name} :</b>
+                                <p style="font-style:italic;">${comment.text}</p>
+                            </li>
                         </c:forEach>
                     </ul>
                 </li>

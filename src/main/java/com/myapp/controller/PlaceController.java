@@ -2,6 +2,7 @@ package com.myapp.controller;
 
 
 import com.myapp.entity.Place;
+import com.myapp.entity.extended.PlaceView;
 import com.myapp.service.EquipmentService;
 import com.myapp.service.PlaceService;
 import com.myapp.service.UserService;
@@ -42,8 +43,8 @@ public class PlaceController {
             Model model){
 //        TODO: id check (if not an Integer or do not exist Place)
         model.addAttribute("title", "Places");
-        com.myapp.entity.extended.PlaceView placeViewView = placeService.getPlaceViewByPlaceId(new Integer(placeIDorUserNickname));
-        model.addAttribute("placeView", placeViewView);
+        PlaceView placeView = placeService.getPlaceViewByPlaceId(new Integer(placeIDorUserNickname));
+        model.addAttribute("placeView", placeView);
         return "place_info";
     }
 
