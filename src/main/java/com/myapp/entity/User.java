@@ -38,15 +38,21 @@ public class User {
     @Pattern(regexp="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}", message="user_save_email_pattern_message")
     private String email;
 
+    @Column (name = "password")
+    private String password;
+
+
+
     public User() {
     }
 
-    public User(String name, String sname, String nickname, String phone, String email) {
+    public User(String name, String sname, String nickname, String phone, String email, String password) {
         this.name = name;
         this.sname = sname;
         this.nickname = nickname;
         this.phone = phone;
         this.email = email;
+        this.password = password;
     }
 
     public int get_id() {
@@ -97,4 +103,11 @@ public class User {
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

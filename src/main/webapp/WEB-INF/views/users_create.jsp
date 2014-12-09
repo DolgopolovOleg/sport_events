@@ -47,6 +47,12 @@
                     <f:errors path="email" cssClass="error" />
                 </div>
 
+                <div>
+                    <label for="user_password">Email : </label>
+                    <f:input path="password" id="user_password" size="10"/>
+                    <f:errors path="password" cssClass="error" />
+                </div>
+
                 <input type="submit">
             </f:form>
 
