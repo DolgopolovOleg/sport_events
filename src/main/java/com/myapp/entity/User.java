@@ -1,13 +1,17 @@
 package com.myapp.entity;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.util.Date;
+import java.util.*;
 
 @Entity
 @Table (name = "user")
-public class User {
+public class User implements UserDetails{
 
     @Id
     @Column (name = "_id")
@@ -38,20 +42,27 @@ public class User {
     @Pattern(regexp="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}", message="user_save_email_pattern_message")
     private String email;
 
+    @Column (name = "username")
+    private String username;
+
     @Column (name = "password")
     private String password;
-
-
 
     public User() {
     }
 
-    public User(String name, String sname, String nickname, String phone, String email, String password) {
+    @ManyToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name="user_role", joinColumns = @JoinColumn(name="user_id"),
+    inverseJoinColumns = @JoinColumn(name="role_id"))
+    private Set<UserRole> userRole = new HashSet<UserRole>();
+
+    public User(String name, String sname, String nickname, String phone, String email, String username, String password) {
         this.name = name;
         this.sname = sname;
         this.nickname = nickname;
         this.phone = phone;
         this.email = email;
+        this.username = username;
         this.password = password;
     }
 
@@ -103,6 +114,10 @@ public class User {
         this.email = email;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -110,4 +125,40 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<SimpleGrantedAuthority> result = new ArrayList<SimpleGrantedAuthority>();
+
+        for(UserRole userRole: this.userRole){
+            result.add(new SimpleGrantedAuthority(userRole.getRoleList().name()));
+        }
+
+        return null;
+    }
+
 }

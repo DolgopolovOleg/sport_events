@@ -10,6 +10,9 @@ import com.myapp.entity.extended.ParticipantView;
 import com.myapp.service.UserService;
 import org.hibernate.criterion.Criterion;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +20,7 @@ import java.util.List;
 
 @Service("userService")
 @Transactional(readOnly = true)
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService, UserDetailsService{
 
     @Autowired
     private UserDao userDao;
@@ -54,4 +57,10 @@ public class UserServiceImpl implements UserService{
         return participantDao.findAllParticipantForEvent(event);
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        User user = userDao.findByUsername(s);
+        if(user == null) throw new UsernameNotFoundException("username: " + s + "not found!");
+        return user;
+    }
 }

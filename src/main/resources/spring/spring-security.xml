@@ -7,11 +7,11 @@
 		http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
 
-    <http>
-        <form-login />
-        <http-basic />
-        <logout />
-        <!--<intercept-url pattern="/**" access="ROLE_USER" />-->
-    </http>
+    <!--<http>-->
+        <!--<form-login />-->
+        <!--<http-basic />-->
+        <!--<logout />-->
+        <!--&lt;!&ndash;<intercept-url pattern="/**" access="ROLE_USER" />&ndash;&gt;-->
+    <!--</http>-->
 
 </beans:beans>
