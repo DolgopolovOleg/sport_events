@@ -3,7 +3,9 @@ package com.myapp.entity;
 import com.myapp.common.RoleList;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -19,8 +21,8 @@ public class UserRole {
     @Column(name="title")
     private RoleList roleList;
 
-    @ManyToMany(mappedBy = "user_role")
-    private Set<User> user = new HashSet<User>();
+//    @ManyToMany(mappedBy = "userRole")
+//    private Set<User> user = new HashSet<User>();
 
     public UserRole() {
     }

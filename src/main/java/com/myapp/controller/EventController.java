@@ -54,4 +54,5 @@ public class EventController {
         return "event_info";
     }
 
+
 }

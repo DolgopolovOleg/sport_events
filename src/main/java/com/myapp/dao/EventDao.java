@@ -11,4 +11,5 @@ public interface EventDao extends AbstractDao<Event, Integer>{
     List<Event> findAllByOrganizerId(Integer id);           //Return eventList where user is Organizer
     List<Event> findAllByParticipantId(Integer id);         //Return eventList where user is Participant
 
+//    void deleteEvent(Event event);                          // deleteEvent and all Relations
 }

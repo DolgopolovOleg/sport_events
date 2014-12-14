@@ -37,15 +37,23 @@ public class PlaceController {
         return "places";
     }
 
-    @RequestMapping(value = "/{placeIDorUserNickname}", method = RequestMethod.GET)
-    public String showUser(
-            @PathVariable String placeIDorUserNickname,
+    @RequestMapping(value = "/{placeID}", method = RequestMethod.GET)
+    public String showPlace(
+            @PathVariable String placeID,
             Model model){
 //        TODO: id check (if not an Integer or do not exist Place)
         model.addAttribute("title", "Places");
-        PlaceView placeView = placeService.getPlaceViewByPlaceId(new Integer(placeIDorUserNickname));
+        PlaceView placeView = placeService.getPlaceViewByPlaceId(new Integer(placeID));
         model.addAttribute("placeView", placeView);
         return "place_info";
+    }
+
+
+    @RequestMapping(value = "/delete", params="id", method = RequestMethod.GET)
+    public String deletePlace(Integer id,
+                              Model model){
+
+        return "places";
     }
 
     //Add equipment to place

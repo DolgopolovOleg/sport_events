@@ -48,15 +48,20 @@ public class User implements UserDetails{
     @Column (name = "password")
     private String password;
 
+    @Column (name = "enabled")
+    private Integer enabled;
+
+    @ManyToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "user_role",  joinColumns = {
+            @JoinColumn(name = "user_id") },
+            inverseJoinColumns = { @JoinColumn(name = "role_id") })
+    private List<UserRole> userRole = new ArrayList<UserRole>();
+
     public User() {
     }
 
-    @ManyToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name="user_role", joinColumns = @JoinColumn(name="user_id"),
-    inverseJoinColumns = @JoinColumn(name="role_id"))
-    private Set<UserRole> userRole = new HashSet<UserRole>();
 
-    public User(String name, String sname, String nickname, String phone, String email, String username, String password) {
+    public User(String name, String sname, String nickname, String phone, String email, String username, String password, Integer enabled) {
         this.name = name;
         this.sname = sname;
         this.nickname = nickname;
@@ -64,6 +69,7 @@ public class User implements UserDetails{
         this.email = email;
         this.username = username;
         this.password = password;
+        this.enabled = enabled;
     }
 
     public int get_id() {
@@ -130,6 +136,22 @@ public class User implements UserDetails{
         this.username = username;
     }
 
+    public Integer getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Integer enabled) {
+        this.enabled = enabled;
+    }
+
+    public List<UserRole> getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(List<UserRole> userRole) {
+        this.userRole = userRole;
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -158,7 +180,7 @@ public class User implements UserDetails{
             result.add(new SimpleGrantedAuthority(userRole.getRoleList().name()));
         }
 
-        return null;
+        return result;
     }
 
 }

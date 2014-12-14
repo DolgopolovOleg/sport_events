@@ -6,13 +6,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-public class MainController {
+public class LoginController {
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String showUserForm(Model model) {
-        model.addAttribute("title", "Index");
-        return "home";
+
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String login(Model model) {
+        model.addAttribute("title", "Login");
+        return "login";
     }
-
 
 }

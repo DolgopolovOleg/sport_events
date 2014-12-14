@@ -9,7 +9,7 @@ import org.hibernate.criterion.Criterion;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.*;
 
 public abstract class AbstractDaoImpl<E, I extends Serializable> implements AbstractDao<E, I>{
 
@@ -51,6 +51,8 @@ public abstract class AbstractDaoImpl<E, I extends Serializable> implements Abst
     @Override
     public List<E> findAll() {
         Criteria criteria = getCurrentSession().createCriteria(entityClass);
+//        Set<E> set = new LinkedHashSet<E>(criteria.list());
+//        return new ArrayList<E>(set);
         return criteria.list();
     }
 }
