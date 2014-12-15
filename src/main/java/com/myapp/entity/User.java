@@ -1,5 +1,7 @@
 package com.myapp.entity;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -55,6 +57,7 @@ public class User implements UserDetails{
     @JoinTable(name = "user_role",  joinColumns = {
             @JoinColumn(name = "user_id") },
             inverseJoinColumns = { @JoinColumn(name = "role_id") })
+    @Fetch(FetchMode.SELECT)
     private List<UserRole> userRole = new ArrayList<UserRole>();
 
     public User() {
