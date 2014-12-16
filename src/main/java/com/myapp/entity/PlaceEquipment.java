@@ -15,7 +15,7 @@ public class PlaceEquipment {
     @JoinColumn(name="pl_id")
     private Place place;
 
-    @ManyToOne(cascade={CascadeType.REFRESH})
+    @OneToOne(cascade={CascadeType.REFRESH})
     @JoinColumn(name="eq_id")
     private Equipment equipment;
 
@@ -25,7 +25,7 @@ public class PlaceEquipment {
     public PlaceEquipment() {
     }
 
-    public PlaceEquipment(Place place, Equipment equipment, int count) {
+        public PlaceEquipment(Place place, Equipment equipment, int count) {
         this.place = place;
         this.equipment = equipment;
         this.count = count;

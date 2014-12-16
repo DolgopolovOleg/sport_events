@@ -1,6 +1,8 @@
 package com.myapp.entity;
 
 
+import com.myapp.common.ParticipantRole;
+
 import javax.persistence.*;
 
 @Entity
@@ -20,10 +22,17 @@ public class Participant {
     @JoinColumn(name="event_id")
     private Event event;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "role")
-    private String role;
+    private ParticipantRole role;
 
     public Participant() {
+    }
+
+    public Participant(User user, Event event, ParticipantRole role) {
+        this.user = user;
+        this.event = event;
+        this.role = role;
     }
 
     public int get_id() {
@@ -50,11 +59,11 @@ public class Participant {
         this.event = event;
     }
 
-    public String getRole() {
+    public ParticipantRole getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(ParticipantRole role) {
         this.role = role;
     }
 }

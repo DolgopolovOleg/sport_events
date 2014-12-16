@@ -1,7 +1,9 @@
 package com.myapp.entity;
 
-import com.myapp.entity.extended.PlaceView;
+//import com.myapp.entity.extended.PlaceView;
 import com.myapp.service.PlaceService;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.Resource;
@@ -9,6 +11,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 
@@ -46,6 +49,10 @@ public class Event {
     @Column(name = "date_finish", columnDefinition="DATETIME")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateFinish;
+
+    @OneToMany(targetEntity = Participant.class, mappedBy = "event", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SELECT)
+    private List<Participant> participants;
 
     public Event() {
     }
@@ -115,7 +122,15 @@ public class Event {
         this.dateFinish = dateFinish;
     }
 
-//    public PlaceView getPlaceView(Place place){
+    public List<Participant> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(List<Participant> participants) {
+        this.participants = participants;
+    }
+
+    //    public PlaceView getPlaceView(Place place){
 //        return
 //    }
 }

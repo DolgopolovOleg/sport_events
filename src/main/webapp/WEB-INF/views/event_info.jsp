@@ -8,8 +8,7 @@
 <tiles:insertDefinition name="defaultTemplate">
     <tiles:putAttribute name="body">
 
-        <c:set var="event" value="${eventView.event}" />
-        <c:set var="place" value="${eventView.event.place}" />
+        <c:set var="place" value="${event.place}" />
 
 
         <div class="body">
@@ -33,8 +32,8 @@
                         <li><u>Создатель</u> : ${place.creator.name}</li>
                         <li><u>Оборудование</u> :
                             <ul>
-                                <c:forEach items="${eventView.placeView.equipments}" var="equipment">
-                                    <li><b>${equipment.key.name}</b> x ${equipment.value}</li>
+                                <c:forEach items="${place.equipments}" var="equipment">
+                                    <li><b>${equipment.equipment.name}</b> x ${equipment.count}</li>
                                 </c:forEach>
                             </ul>
                         </li>
@@ -44,7 +43,7 @@
                 <li>
                     <u>Участники</u> :
                     <ul>
-                        <c:forEach items="${eventView.participants}" var="participant">
+                        <c:forEach items="${event.participants}" var="participant">
                             <li><b>${participant.user.name}</b> (${participant.role})</li>
                         </c:forEach>
                     </ul>

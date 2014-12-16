@@ -6,6 +6,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Example;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
@@ -51,8 +52,12 @@ public abstract class AbstractDaoImpl<E, I extends Serializable> implements Abst
     @Override
     public List<E> findAll() {
         Criteria criteria = getCurrentSession().createCriteria(entityClass);
-//        Set<E> set = new LinkedHashSet<E>(criteria.list());
-//        return new ArrayList<E>(set);
         return criteria.list();
+    }
+
+    @Override
+    public List<E> findAll(Example example) {
+        Criteria criteria = getCurrentSession().createCriteria(entityClass);
+        return criteria.add(example).list();
     }
 }

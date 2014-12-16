@@ -22,4 +22,10 @@ public class CommentDaoImpl extends AbstractDaoImpl<Comment, Integer> implements
                 .add(Restrictions.eq("from_id", id))
                 .list();
     }
+
+    @Override
+    public void deleteByFromAndFromId(String from, Integer fromId) {
+        this.findByFromAndFromId(from, fromId);
+    }
+
 }

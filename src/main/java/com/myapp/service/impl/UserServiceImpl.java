@@ -1,14 +1,15 @@
 package com.myapp.service.impl;
 
 
-import com.myapp.dao.ParticipantDao;
+//import com.myapp.dao.ParticipantDao;
 import com.myapp.dao.UserDao;
 import com.myapp.entity.Event;
 import com.myapp.entity.Participant;
 import com.myapp.entity.User;
-import com.myapp.entity.extended.ParticipantView;
+//import com.myapp.entity.extended.ParticipantView;
 import com.myapp.service.UserService;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Example;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -25,8 +26,8 @@ public class UserServiceImpl implements UserService, UserDetailsService{
     @Autowired
     private UserDao userDao;
 
-    @Autowired
-    private ParticipantDao participantDao;
+//    @Autowired
+//    private ParticipantDao participantDao;
 
     @Override
     public User findById(Integer id) {
@@ -49,13 +50,14 @@ public class UserServiceImpl implements UserService, UserDetailsService{
 
     @Override
     public List<User> findAll(){
-        return userDao.findAll();
+        Example example = Example.create(new User()).excludeProperty("password");
+        return userDao.findAll(example);
     }
 
-    @Override
-    public List<ParticipantView> findAllParticipantForEvent(Event event) {
-        return participantDao.findAllParticipantForEvent(event);
-    }
+//    @Override
+//    public List<ParticipantView> findAllParticipantForEvent(Event event) {
+//        return participantDao.findAllParticipantForEvent(event);
+//    }
 
     @Override
     @Transactional

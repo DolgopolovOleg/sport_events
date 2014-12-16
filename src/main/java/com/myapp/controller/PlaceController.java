@@ -2,7 +2,6 @@ package com.myapp.controller;
 
 
 import com.myapp.entity.Place;
-import com.myapp.entity.extended.PlaceView;
 import com.myapp.service.EquipmentService;
 import com.myapp.service.PlaceService;
 import com.myapp.service.UserService;
@@ -32,8 +31,8 @@ public class PlaceController {
     public String showAllPlaces(Model model){
         List<Place> places = placeService.findAll();
         model.addAttribute("places", places);
-        com.myapp.entity.extended.PlaceView plV = placeService.getPlaceViewByPlaceId(1);
-        placeService.findEquipmentsForPlace(placeService.findById(1));
+//        com.myapp.entity.extended.PlaceView plV = placeService.getPlaceViewByPlaceId(1);
+//        placeService.findEquipmentsForPlace(placeService.findById(1));
         return "places";
     }
 
@@ -43,8 +42,9 @@ public class PlaceController {
             Model model){
 //        TODO: id check (if not an Integer or do not exist Place)
         model.addAttribute("title", "Places");
-        PlaceView placeView = placeService.getPlaceViewByPlaceId(new Integer(placeID));
-        model.addAttribute("placeView", placeView);
+//        PlaceView placeView = placeService.getPlaceViewByPlaceId(new Integer(placeID));
+        Place place = placeService.findById(new Integer(placeID));
+        model.addAttribute("place", place);
         return "place_info";
     }
 
@@ -53,7 +53,7 @@ public class PlaceController {
     public String deletePlace(Integer id,
                               Model model){
 
-        return "places";
+        return "redirect:/places";
     }
 
     //Add equipment to place

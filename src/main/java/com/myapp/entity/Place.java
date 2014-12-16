@@ -1,8 +1,12 @@
 package com.myapp.entity;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -28,9 +32,15 @@ public class Place {
     @Column (name = "description", columnDefinition="TEXT")
     private String description;
 
-    @ManyToOne(cascade= {CascadeType.REFRESH})
+    @OneToOne(cascade= {CascadeType.REFRESH})
     @JoinColumn(name="creator")
     private User creator;
+
+    @OneToMany(targetEntity = PlaceEquipment.class, mappedBy = "place", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SELECT)
+    private List<PlaceEquipment> equipments;
+
+
 
     public Place() {
     }
@@ -92,4 +102,11 @@ public class Place {
         this.creator = creator;
     }
 
+    public List<PlaceEquipment> getEquipments() {
+        return equipments;
+    }
+
+    public void setEquipments(List<PlaceEquipment> equipments) {
+        this.equipments = equipments;
+    }
 }
