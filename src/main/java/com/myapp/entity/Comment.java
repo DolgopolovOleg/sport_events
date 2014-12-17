@@ -1,5 +1,7 @@
 package com.myapp.entity;
 
+import com.myapp.common.Comments;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -24,7 +26,8 @@ public class Comment {
     private Date created;
 
     @Column(name = "from")
-    private String from;
+    @Enumerated(EnumType.STRING)
+    private Comments from;
 
 
     @Column(name = "from_id")
@@ -33,7 +36,7 @@ public class Comment {
     public Comment() {
     }
 
-    public Comment(User user, String text, Date created, String from, Integer from_id) {
+    public Comment(User user, String text, Date created, Comments from, Integer from_id) {
         this.user = user;
         this.text = text;
         this.created = created;
@@ -73,11 +76,11 @@ public class Comment {
         this.created = created;
     }
 
-    public String getFrom() {
+    public Comments getFrom() {
         return from;
     }
 
-    public void setFrom(String from) {
+    public void setFrom(Comments from) {
         this.from = from;
     }
 

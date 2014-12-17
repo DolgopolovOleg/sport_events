@@ -1,5 +1,6 @@
 package com.myapp.service.impl;
 
+import com.myapp.common.Comments;
 import com.myapp.dao.CommentDao;
 import com.myapp.entity.Comment;
 import com.myapp.service.CommentService;
@@ -33,12 +34,12 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void addComment(String from, Comment comment) {
+    public void addComment(Comments from, Comment comment) {
 
     }
 
     @Override
-    public List<Comment> findByFromAndFromId(String from, Integer id) {
+    public List<Comment> findByFromAndFromId(Comments from, Integer id) {
         return commentDao.findByFromAndFromId(from, id);
     }
 }

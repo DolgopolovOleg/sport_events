@@ -37,7 +37,7 @@
                 <li>
                     <u>Комменты</u> :
                     <ul>
-                        <c:forEach items="${placeView.comments}" var="comment">
+                        <c:forEach items="${comments}" var="comment">
                             <li><b>${comment.user.name} :</b>
                                 <p style="font-style:italic;">${comment.text}</p>
                             </li>

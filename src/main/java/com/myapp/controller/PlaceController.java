@@ -1,7 +1,10 @@
 package com.myapp.controller;
 
 
+import com.myapp.common.Comments;
+import com.myapp.entity.Comment;
 import com.myapp.entity.Place;
+import com.myapp.service.CommentService;
 import com.myapp.service.EquipmentService;
 import com.myapp.service.PlaceService;
 import com.myapp.service.UserService;
@@ -27,6 +30,9 @@ public class PlaceController {
     @Autowired
     EquipmentService equipmentService;
 
+    @Autowired
+    CommentService commentService;
+
     @RequestMapping(value="", method = RequestMethod.GET)
     public String showAllPlaces(Model model){
         List<Place> places = placeService.findAll();
@@ -38,13 +44,15 @@ public class PlaceController {
 
     @RequestMapping(value = "/{placeID}", method = RequestMethod.GET)
     public String showPlace(
-            @PathVariable String placeID,
+            @PathVariable Integer placeID,
             Model model){
 //        TODO: id check (if not an Integer or do not exist Place)
         model.addAttribute("title", "Places");
-//        PlaceView placeView = placeService.getPlaceViewByPlaceId(new Integer(placeID));
         Place place = placeService.findById(new Integer(placeID));
+        List<Comment> comments = commentService.findByFromAndFromId(Comments.PLACE, placeID);
+
         model.addAttribute("place", place);
+        model.addAttribute("comments", comments);
         return "place_info";
     }
 

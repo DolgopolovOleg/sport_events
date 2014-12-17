@@ -1,6 +1,7 @@
 package com.myapp.controller;
 
 
+import com.myapp.common.Comments;
 import com.myapp.entity.Comment;
 import com.myapp.entity.Event;
 import com.myapp.entity.User;
@@ -50,7 +51,7 @@ public class EventController {
 //        EventView eventView = eventService.getEventViewByEventId(eventID);
 //        List<ParticipantView> users = userService.findAllParticipantForEvent(event);
         model.addAttribute("event", event);
-        List<Comment> comments = commentService.findByFromAndFromId("EVENT", 1);
+        List<Comment> comments = commentService.findByFromAndFromId(Comments.EVENT, eventID);
         return "event_info";
     }
 

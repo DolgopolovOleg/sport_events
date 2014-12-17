@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CommentDao extends AbstractDao<Comment, Integer>{
 
-    List<Comment> findByFromAndFromId(String from, Integer id);
-    void deleteByFromAndFromId(String from, Integer fromId);
+    List<Comment> findByFromAndFromId(Comments from, Integer id);
+    void deleteByFromAndFromId(Comments from, Integer fromId);
 
 }
