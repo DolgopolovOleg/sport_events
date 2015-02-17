@@ -7,6 +7,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 
+<fmt:setLocale value="ru"/>
+<fmt:setBundle basename="languages.lang"/>
 <fmt:requestEncoding value="UTF-8" />
 
 <tiles:insertDefinition name="defaultTemplate">
@@ -16,24 +18,19 @@
 
         <div class="body">
             <h1>Create user</h1>
+            <div><fmt:message key="first"/></div>
 
-            <f:form method="POST" modelAttribute="user">
+            <f:form method="POST" modelAttribute="user" action="create">
                 <div>
-                    <label for="user_name">Name : </label>
+                    <label for="user_name">Name* : </label>
                     <f:input path="name" id="user_name" size="10"/>
                     <f:errors path="name" cssClass="error" />
                 </div>
 
                 <div>
-                    <label for="user_sname">Surname : </label>
+                    <label for="user_sname">Surname* : </label>
                     <f:input path="sname" id="user_sname" size="10"/>
                     <f:errors path="sname" cssClass="error" />
-                </div>
-
-                <div>
-                    <label for="user_nickname">Nickname : </label>
-                    <f:input path="nickname" id="user_nickname" size="10"/>
-                    <f:errors path="nickname" cssClass="error" />
                 </div>
 
                 <div>
@@ -43,13 +40,13 @@
                 </div>
 
                 <div>
-                    <label for="user_email">Email : </label>
+                    <label for="user_email">Email* : </label>
                     <f:input path="email" id="user_email" size="10"/>
                     <f:errors path="email" cssClass="error" />
                 </div>
 
                 <div>
-                    <label for="user_password">Email : </label>
+                    <label for="user_password">Password* : </label>
                     <f:input path="password" id="user_password" size="10"/>
                     <f:errors path="password" cssClass="error" />
                 </div>

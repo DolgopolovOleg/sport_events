@@ -11,8 +11,8 @@
     <form action="/authentication" method="post">
 
         <p>
-            <label for="username">Login: </label>
-            <input type="username" id="username" name="username" />
+            <label for="email">Login: </label>
+            <input type="email" id="email" name="email" />
         </p>
 
         <p>

@@ -1,7 +1,9 @@
 package com.myapp.entity;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.Type;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,73 +11,86 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.*;
 
 @Entity
-@Table (name = "user")
-public class User implements UserDetails{
+@Table (name = "user", uniqueConstraints = @UniqueConstraint(columnNames = {"email"}))
+public class User implements UserDetails, Serializable {
 
     @Id
     @Column (name = "_id")
     @GeneratedValue
     private int _id;
 
-    @Column (name = "name")
-    @Size(min=1, max=30, message="user_save_name_size_message")
+    @Column (name = "name", nullable = true)
+    @Size(min=3, max=30, message="user_save_name_size_message")
     @Pattern(regexp="^[а-яА-Яa-zA-Z0-9_]+$", message="user_save_name_pattern_message")
     private String name;
 
-    @Column (name = "sname")
-    @Size(min=1, max=30, message="user_save_sname_size_message")
+    @Column (name = "sname", nullable = true)
+    @Size(min=3, max=30, message="user_save_sname_size_message")
     @Pattern(regexp="^[а-яА-Яa-zA-Z0-9_]+$", message="user_save_sname_pattern_message")
     private String sname;
 
-    @Column (name = "nickname")
-    @Size(min=1, max=30, message="user_save_nickname_size_message")
-    @Pattern(regexp="^[а-яА-Яa-zA-Z0-9_]+$", message="user_save_nickname_pattern_message")
-    private String nickname;
+//    @Column (name = "nickname", nullable = true)
+//    @Size(min=1, max=30, message="user_save_nickname_size_message")
+//    @Pattern(regexp="^[а-яА-Яa-zA-Z0-9_]+$", message="user_save_nickname_pattern_message")
+//    private String nickname;
 
     @Column (name = "phone")
-    @Size(min=3, max=30, message="user_save_phone_size_message")
-    @Pattern(regexp="^[+0-9 )(]+$", message="user_save_phone_pattern_message")
+//    @Size(min=0, max=30, message="user_save_phone_size_message")
+//    @Pattern(regexp="^[+0-9 )(]+$", message="user_save_phone_pattern_message")
     private String phone;
 
-    @Column (name = "email")
+    @Column (name = "email", unique = true)
+//    @Column (name = "email")
     @Pattern(regexp="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}", message="user_save_email_pattern_message")
     private String email;
 
-    @Column (name = "username")
-    private String username;
+//    @Column (name = "username")
+//    private String username;
 
     @Column (name = "password")
+    @Size(min=3, max=40, message="user_save_password_size_message")
+    @Pattern(regexp="^[а-яА-Яa-zA-Z0-9_]+$", message="user_save_password_pattern_message")
     private String password;
 
     @Column (name = "enabled")
-    private Integer enabled;
+    @Type(type = "org.hibernate.type.NumericBooleanType")
+//    private Integer enabled;
+    private Boolean enabled;
 
-    @ManyToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "user_role",  joinColumns = {
-            @JoinColumn(name = "user_id") },
-            inverseJoinColumns = { @JoinColumn(name = "role_id") })
+    @OneToMany(targetEntity = UserRole.class, mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SELECT)
     private List<UserRole> userRole = new ArrayList<UserRole>();
+
+    @JsonIgnore
+    public List<UserRole> getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(List<UserRole> userRole) {
+        this.userRole = userRole;
+    }
 
     public User() {
     }
 
-
-    public User(String name, String sname, String nickname, String phone, String email, String username, String password, Integer enabled) {
+    public User(String name, String sname, String phone, String email, String password, Boolean enabled) {
         this.name = name;
         this.sname = sname;
-        this.nickname = nickname;
         this.phone = phone;
         this.email = email;
-        this.username = username;
         this.password = password;
         this.enabled = enabled;
     }
 
+    @JsonIgnore
     public int get_id() {
+        return _id;
+    }
+    public int getId() {
         return _id;
     }
 
@@ -99,14 +114,6 @@ public class User implements UserDetails{
         this.sname = sname;
     }
 
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
     public String getPhone() {
         return phone;
     }
@@ -123,67 +130,67 @@ public class User implements UserDetails{
         this.email = email;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
+    @JsonIgnore
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    @JsonIgnore
+    public String getUsername() {
+        return this.getEmail();
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    @JsonIgnore
+    public Boolean getEnabled() {
+        return this.enabled;
     }
 
-    public Integer getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(Integer enabled) {
+    public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
     }
 
-    public List<UserRole> getUserRole() {
-        return userRole;
-    }
-
-    public void setUserRole(List<UserRole> userRole) {
-        this.userRole = userRole;
-    }
-
     @Override
+    @JsonIgnore
     public boolean isAccountNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonLocked() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isEnabled() {
-        return true;
+        return this.getEnabled();
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> result = new ArrayList<SimpleGrantedAuthority>();
 
-        for(UserRole userRole: this.userRole){
+        for(UserRole userRole: this.getUserRole()){
             result.add(new SimpleGrantedAuthority(userRole.getRoleList().name()));
         }
 
         return result;
     }
+
+//    public static User getLoggedUser(){
+//        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//    }
 
 }

@@ -4,11 +4,14 @@ package com.myapp.controller;
 import com.myapp.common.Comments;
 import com.myapp.entity.Comment;
 import com.myapp.entity.Place;
+import com.myapp.entity.User;
 import com.myapp.service.CommentService;
 import com.myapp.service.EquipmentService;
 import com.myapp.service.PlaceService;
 import com.myapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,11 +51,21 @@ public class PlaceController {
             Model model){
 //        TODO: id check (if not an Integer or do not exist Place)
         model.addAttribute("title", "Places");
-        Place place = placeService.findById(new Integer(placeID));
+        Place place = placeService.findById(placeID);
         List<Comment> comments = commentService.findByFromAndFromId(Comments.PLACE, placeID);
 
         model.addAttribute("place", place);
         model.addAttribute("comments", comments);
+
+        User currentUser = userService.getLoggedUser();
+//        User someUser = userService.findById(24);
+//        userService.activateUser(someUser);
+
+        Comment comment = new Comment();
+            comment.setFrom(Comments.PLACE);
+            comment.setUser(currentUser);
+            comment.setFrom_id(place.get_id());
+        model.addAttribute("comment", comment);
         return "place_info";
     }
 

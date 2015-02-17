@@ -1,21 +1,25 @@
 package com.myapp.entity;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "place")
-public class Place {
+public class Place implements Serializable{
 
     @Id
     @Column(name = "_id")
     @GeneratedValue
+    @JsonIgnore
     private int _id;
 
     @Column (name = "name")
@@ -36,6 +40,14 @@ public class Place {
     @JoinColumn(name="creator")
     private User creator;
 
+    @Column(name = "created", columnDefinition="DATETIME")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date created;
+
+    @Column(name = "updated", columnDefinition="DATETIME")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updated;
+
     @OneToMany(targetEntity = PlaceEquipment.class, mappedBy = "place", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SELECT)
     private List<PlaceEquipment> equipments;
@@ -54,7 +66,12 @@ public class Place {
 //        this.equipmentList = equipmentList;
     }
 
+    @JsonIgnore
     public int get_id() {
+        return _id;
+    }
+
+    public int getId() {
         return _id;
     }
 
@@ -102,6 +119,22 @@ public class Place {
         this.creator = creator;
     }
 
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public Date getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(Date updated) {
+        this.updated = updated;
+    }
+
     public List<PlaceEquipment> getEquipments() {
         return equipments;
     }
@@ -109,4 +142,5 @@ public class Place {
     public void setEquipments(List<PlaceEquipment> equipments) {
         this.equipments = equipments;
     }
+
 }

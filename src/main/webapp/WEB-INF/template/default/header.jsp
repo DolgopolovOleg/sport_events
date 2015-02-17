@@ -4,7 +4,8 @@
 
 <div>Das ist header - ${title} |
     <sec:authorize access="isAnonymous()">
-        <a href="/login">Login</a>
+        <a href="/login">Login</a> /
+        <a href="/registration">Registration</a>
     </sec:authorize>
 
     <sec:authorize access="isAuthenticated()">

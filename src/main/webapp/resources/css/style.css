@@ -1,0 +1,17 @@
+.content{
+    position: relative;
+    min-height: 150px;
+}
+.menu{
+    position:absolute;
+    width:200px;
+    float:left;
+    height: 100%;
+}
+.body{
+    padding-left: 200px;
+}
+.error{
+    color:red;
+    display:block;
+}

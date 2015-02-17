@@ -2,12 +2,14 @@ package com.myapp.entity;
 
 
 import com.myapp.common.ParticipantRole;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table (name="participant")
-public class Participant {
+public class Participant implements Serializable{
 
     @Id
     @Column(name = "_id")
@@ -35,7 +37,12 @@ public class Participant {
         this.role = role;
     }
 
+    @JsonIgnore
     public int get_id() {
+        return _id;
+    }
+
+    public int getId() {
         return _id;
     }
 

@@ -1,11 +1,14 @@
 package com.myapp.entity;
 
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "sport")
-public class Sport {
+public class Sport  implements Serializable {
 
     //TODO: make validation to all fields
 
@@ -28,7 +31,12 @@ public class Sport {
         this.icon = icon;
     }
 
+    @JsonIgnore
     public int get_id() {
+        return _id;
+    }
+
+    public int getId() {
         return _id;
     }
 

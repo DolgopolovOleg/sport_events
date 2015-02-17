@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service("placeService")
-@Transactional(readOnly = true)
+@Transactional(readOnly = false)
 public class PlaceServiceImpl implements PlaceService {
 
     @Autowired

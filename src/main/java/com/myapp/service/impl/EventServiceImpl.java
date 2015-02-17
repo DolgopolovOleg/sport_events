@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service("eventService")
-@Transactional(readOnly = true)
+@Transactional(readOnly = false)
 public class EventServiceImpl implements EventService {
 
     @Autowired

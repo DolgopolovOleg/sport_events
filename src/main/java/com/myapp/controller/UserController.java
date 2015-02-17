@@ -1,6 +1,8 @@
 package com.myapp.controller;
 
 import com.myapp.entity.User;
+import com.myapp.mail_utils.MessageProducer;
+import com.myapp.service.MailService;
 import com.myapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,8 +11,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.jms.JMSException;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -21,11 +23,17 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private MessageProducer messageProducer;
+
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public String showUsers(Model model){
+    public String showUsers(Model model) throws JMSException {
         List<User> allUser = userService.findAll();
         model.addAttribute("title", "Users");
         model.addAttribute("users", allUser);
+//        MessageProducerImpl mp = new MessageProducerImpl();
+//        mp.sendMessages();
+
         return "users";
     }
 
@@ -37,21 +45,9 @@ public class UserController {
         model.addAttribute("title", "Users");
         User user = userService.findById(new Integer(userIDorUserNickname));
         model.addAttribute("user", user);
-        return "user_info";
+//        messageProducer.sendMessages(user);
+//        mailService.sendUserMail("allegamex@gmail.com", user);
+        return "users_info";
     }
 
-    @RequestMapping(value = "create", method = RequestMethod.GET)
-    public String createUser(Model model){
-        model.addAttribute(new User());
-        return "users_create";
-    }
-
-    @RequestMapping(value = "create", method = RequestMethod.POST)
-    public String addUserFromForm(@Valid User user, BindingResult bindingResult){
-        if(bindingResult.hasErrors()){
-            return "users_create";
-        }
-        userService.save(user);
-        return "redirect:/users/" + user.get_id();
-    }
 }

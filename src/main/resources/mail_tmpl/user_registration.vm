@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns="http://www.w3.org/1999/xhtml" style="margin: 0; padding: 0;">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>${header}</title>
+</head>
+
+<body>
+
+    <h1>${header}</h1>
+    <p>
+        Уважаемый <b>${user.name} ${user.sname}</b> вы зарегистрировались на сайте SportGrounds.com.<br />
+        Для того что бы активировать аккаунт скопируйте этот ключ <b>${activationCode}</b> в поле ввода на
+        <a href="http://localhost:18080/activation?userID=${user.id}">странице активации</a>
+        или пройдите по
+        <a href="http://localhost:18080/activateUser?userID=${user.id}&activationCode=${activationCode}">ссылке</a>.
+    </p>
+    <hr>
+    <p>
+        Письмо создано роботом, просьбы не отвечать на письмо.<br />
+        Администрация сайта sportgrounds.com
+    </p>
+
+</body>
+
+</html>

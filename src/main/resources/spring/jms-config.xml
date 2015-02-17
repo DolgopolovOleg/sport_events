@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:amq="http://activemq.apache.org/schema/core"
+       xmlns:jms="http://www.springframework.org/schema/jms"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                          http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                          http://www.springframework.org/schema/jms
+                          http://www.springframework.org/schema/jms/spring-jms-3.1.xsd
+                          http://activemq.apache.org/schema/core
+                          http://activemq.apache.org/schema/core/activemq-core.xsd">
+
+    <!--<bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">-->
+        <!--<constructor-arg index="0" value="tcp://localhost:61616"/>-->
+    <!--</bean>-->
+
+    <!--<bean id="destination" class="org.apache.activemq.command.ActiveMQQueue">-->
+        <!--<constructor-arg value="sportgrounds"/>-->
+    <!--</bean>-->
+
+    <!--<bean id="jmsContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">-->
+        <!--<property name="connectionFactory" ref="connectionFactory" />-->
+        <!--<property name="destination" ref="queue" />-->
+        <!--<property name="messageListener" ref="messageListener" />-->
+    <!--</bean>-->
+
+    <!--<bean id="messageListener" class="com.myapp.mail_utils.MessageListenerImpl"/>-->
+
+    <amq:connectionFactory id="connectionFactory" brokerURL="tcp://localhost:61616" />
+
+    <amq:queue id="queue" physicalName="sportgrounds" />
+
+    <bean id="userHandler" class="com.myapp.alerts.UserAlertHandler" />
+
+    <jms:listener-container>
+        <jms:listener destination="sportgrounds" ref="userHandler" method="processActivation" />
+        <jms:listener destination="sportgrounds" ref="userHandler" method="processUser" />
+        <jms:listener destination="sportgrounds" ref="userHandler" method="processEvent" />
+    </jms:listener-container>
+
+    <bean id="producerTemplate" class="org.springframework.jms.core.JmsTemplate"
+          p:connectionFactory-ref="connectionFactory" p:defaultDestination-ref="queue" />
+
+    <bean id="messageProducer" class="com.myapp.mail_utils.MessageProducerImpl">
+        <constructor-arg ref="producerTemplate" />
+    </bean>
+
+</beans>

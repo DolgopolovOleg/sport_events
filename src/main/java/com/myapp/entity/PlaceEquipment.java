@@ -1,10 +1,13 @@
 package com.myapp.entity;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "place_equipment")
-public class PlaceEquipment {
+public class PlaceEquipment implements Serializable {
 
     @Id
     @Column (name = "_id")
@@ -31,7 +34,12 @@ public class PlaceEquipment {
         this.count = count;
     }
 
+    @JsonIgnore
     public int get_id() {
+        return _id;
+    }
+
+    public int getId() {
         return _id;
     }
 
@@ -39,6 +47,7 @@ public class PlaceEquipment {
         this._id = _id;
     }
 
+    @JsonIgnore
     public Place getPlace() {
         return place;
     }

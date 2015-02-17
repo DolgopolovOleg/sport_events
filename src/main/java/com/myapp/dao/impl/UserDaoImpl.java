@@ -23,4 +23,9 @@ public class UserDaoImpl extends AbstractDaoImpl<User, Integer> implements UserD
         return (User) super.findByCriteria(Restrictions.eq("username", (Object) username)).get(0);
     }
 
+    @Override
+    public User findByEmail(String email) {
+        return (User) super.findByCriteria(Restrictions.eq("email", (Object) email)).get(0);
+    }
+
 }

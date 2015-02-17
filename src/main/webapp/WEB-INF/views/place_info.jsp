@@ -2,8 +2,9 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="f"%>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="h" %>
 
 <tiles:insertDefinition name="defaultTemplate">
     <tiles:putAttribute name="body">
@@ -36,13 +37,27 @@
                 </li>
                 <li>
                     <u>Комменты</u> :
-                    <ul>
-                        <c:forEach items="${comments}" var="comment">
-                            <li><b>${comment.user.name} :</b>
-                                <p style="font-style:italic;">${comment.text}</p>
-                            </li>
-                        </c:forEach>
-                    </ul>
+
+                    <h:chat comments="${greetings}" />
+
+                    <hr>
+
+                    <h3><b>Ваше высказывание:</b></h3>
+                    <f:form action="/comments/addComment" method="post" modelAttribute="comment">
+                        <label for="comment_text">Text:</label>
+                        <f:textarea path="text" id="comment_text"></f:textarea>
+                        <f:hidden path="from" />
+                        <f:hidden path="from_id" />
+                        <input type="submit" value="Высказаться"/>
+                    </f:form>
+
+                    <%--<ul>--%>
+                        <%--<c:forEach items="${comments}" var="comment">--%>
+                            <%--<li><b>${comment.user.name} :</b>--%>
+                                <%--<p style="font-style:italic;">${comment.text}</p>--%>
+                            <%--</li>--%>
+                        <%--</c:forEach>--%>
+                    <%--</ul>--%>
                 </li>
             </ul>
 

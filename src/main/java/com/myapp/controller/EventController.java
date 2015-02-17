@@ -8,6 +8,7 @@ import com.myapp.entity.User;
 //import com.myapp.entity.extended.EventView;
 //import com.myapp.entity.extended.ParticipantView;
 //import com.myapp.entity.extended.PlaceView;
+import com.myapp.mail_utils.MessageProducer;
 import com.myapp.service.CommentService;
 import com.myapp.service.EventService;
 import com.myapp.service.UserService;
@@ -33,6 +34,9 @@ public class EventController {
     @Autowired
     CommentService commentService;
 
+    @Autowired
+    private MessageProducer messageProducer;
+
 
     @RequestMapping(value="")
     public String showAllEvents(Model model){
@@ -51,6 +55,7 @@ public class EventController {
 //        EventView eventView = eventService.getEventViewByEventId(eventID);
 //        List<ParticipantView> users = userService.findAllParticipantForEvent(event);
         model.addAttribute("event", event);
+        messageProducer.sendMessages(event);
         List<Comment> comments = commentService.findByFromAndFromId(Comments.EVENT, eventID);
         return "event_info";
     }

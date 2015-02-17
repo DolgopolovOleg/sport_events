@@ -2,6 +2,7 @@ package com.myapp.entity;
 
 //import com.myapp.entity.extended.PlaceView;
 import com.myapp.service.PlaceService;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +11,14 @@ import javax.annotation.Resource;
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 
 @Table(name="event")
-public class Event {
+public class Event implements Serializable{
 
 //    @Resource(name="placeService")
 //    private PlaceService placeService;
@@ -66,7 +68,12 @@ public class Event {
         this.dateFinish = dateFinish;
     }
 
+    @JsonIgnore
     public int get_id() {
+        return _id;
+    }
+
+    public int getId() {
         return _id;
     }
 

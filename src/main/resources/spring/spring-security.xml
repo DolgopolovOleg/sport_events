@@ -2,9 +2,9 @@
              xmlns:beans="http://www.springframework.org/schema/beans"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://www.springframework.org/schema/beans
-		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
-		http://www.springframework.org/schema/security
-		http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+                http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                http://www.springframework.org/schema/security
+                http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
     <http pattern="/images/**" security="none" />
     <http pattern="/js/**" security="none" />
@@ -16,7 +16,7 @@
         <form-login
                     login-processing-url="/authentication"
                     login-page="/login"
-                    username-parameter="username"
+                    username-parameter="email"
                     password-parameter="password"
                     default-target-url="/"
                     always-use-default-target="true"

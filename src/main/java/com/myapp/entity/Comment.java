@@ -1,13 +1,15 @@
 package com.myapp.entity;
 
 import com.myapp.common.Comments;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name="comment")
-public class Comment {
+@Table(name="comments")
+public class Comment  implements Serializable {
 
     @Id
     @Column(name = "_id")
@@ -25,7 +27,7 @@ public class Comment {
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
 
-    @Column(name = "from")
+    @Column(name = "from_where")
     @Enumerated(EnumType.STRING)
     private Comments from;
 
@@ -44,7 +46,12 @@ public class Comment {
         this.from_id = from_id;
     }
 
+    @JsonIgnore
     public int get_id() {
+        return _id;
+    }
+
+    public int getId() {
         return _id;
     }
 

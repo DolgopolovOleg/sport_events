@@ -12,7 +12,7 @@ import java.util.List;
 
 
 @Service("commentService")
-@Transactional(readOnly = true)
+@Transactional(readOnly = false)
 public class CommentServiceImpl implements CommentService {
 
     @Autowired
