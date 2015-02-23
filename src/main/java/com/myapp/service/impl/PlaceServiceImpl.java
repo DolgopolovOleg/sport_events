@@ -45,6 +45,11 @@ public class PlaceServiceImpl implements PlaceService {
         placeDao.saveOrUpdate(place);
     }
 
+    @Override
+    public void delete(Place place) {
+        placeDao.delete(place);
+    }
+
 //    @Override
 //    public PlaceView getPlaceViewByPlaceId(Integer placeId) {
 //        Place place = placeDao.findById(placeId);

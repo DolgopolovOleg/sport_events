@@ -13,6 +13,7 @@ public interface PlaceService {
     List<Place> findAll();
     Place findById(Integer id);
     void save(Place place);
+    void delete(Place place);
 //    com.myapp.entity.extended.PlaceView getPlaceViewByPlaceId(Integer placeId);
 
 //    List<Map<Equipment, Integer>> findEquipmentByPlaceId(Integer placeId);

@@ -36,9 +36,12 @@ public class Place implements Serializable{
     @Column (name = "description", columnDefinition="TEXT")
     private String description;
 
-    @OneToOne(cascade= {CascadeType.REFRESH})
-    @JoinColumn(name="creator")
-    private User creator;
+//    @OneToOne(cascade= {CascadeType.REFRESH})
+//    @JoinColumn(name="creator")
+//    private User creator;
+
+    @Column(name = "creator")
+    private Integer creator;
 
     @Column(name = "created", columnDefinition="DATETIME")
     @Temporal(TemporalType.TIMESTAMP)
@@ -48,16 +51,16 @@ public class Place implements Serializable{
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated;
 
-    @OneToMany(targetEntity = PlaceEquipment.class, mappedBy = "place", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SELECT)
-    private List<PlaceEquipment> equipments;
+//    @OneToMany(targetEntity = PlaceEquipment.class, mappedBy = "place", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @Fetch(FetchMode.SELECT)
+//    private List<PlaceEquipment> equipments;
 
 
 
     public Place() {
     }
 
-    public Place(String name, String longitude, String latitude, String description, User creator) {
+    public Place(String name, String longitude, String latitude, String description, Integer creator) {
         this.name = name;
         this.longitude = longitude;
         this.latitude = latitude;
@@ -76,6 +79,10 @@ public class Place implements Serializable{
     }
 
     public void set_id(int _id) {
+        this._id = _id;
+    }
+
+    public void setId(int _id) {
         this._id = _id;
     }
 
@@ -111,11 +118,20 @@ public class Place implements Serializable{
         this.description = description;
     }
 
-    public User getCreator() {
+//    public User getCreator() {
+//        return creator;
+//    }
+//
+//    public void setCreator(User creator) {
+//        this.creator = creator;
+//    }
+
+
+    public Integer getCreator() {
         return creator;
     }
 
-    public void setCreator(User creator) {
+    public void setCreator(Integer creator) {
         this.creator = creator;
     }
 
@@ -135,12 +151,12 @@ public class Place implements Serializable{
         this.updated = updated;
     }
 
-    public List<PlaceEquipment> getEquipments() {
-        return equipments;
-    }
-
-    public void setEquipments(List<PlaceEquipment> equipments) {
-        this.equipments = equipments;
-    }
+//    public List<PlaceEquipment> getEquipments() {
+//        return equipments;
+//    }
+//
+//    public void setEquipments(List<PlaceEquipment> equipments) {
+//        this.equipments = equipments;
+//    }
 
 }
