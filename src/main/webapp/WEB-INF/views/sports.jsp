@@ -16,7 +16,7 @@
             <ul>
                 <c:forEach items="${sports}" var="sport">
                     <li>
-                        ${sport.name}
+                        ${sport.username}
                     </li>
                 </c:forEach>
             </ul>

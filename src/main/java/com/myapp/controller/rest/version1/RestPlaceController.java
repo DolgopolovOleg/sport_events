@@ -1,19 +1,14 @@
 package com.myapp.controller.rest.version1;
 
 import com.myapp.entity.Place;
-import com.myapp.entity.User;
 import com.myapp.service.PlaceService;
 import com.myapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
-import java.net.BindException;
+//import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.List;
 

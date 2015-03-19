@@ -1,23 +1,15 @@
 package com.myapp.controller;
 
 import com.myapp.common.Comments;
-import com.myapp.common.DateFormatter;
-import com.myapp.dao.CommentDao;
 import com.myapp.entity.Comment;
-import com.myapp.entity.User;
 import com.myapp.service.CommentService;
 import com.myapp.service.UserService;
-import org.apache.log4j.helpers.DateTimeDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.validation.Valid;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Controller

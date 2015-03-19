@@ -2,18 +2,15 @@ package com.myapp.controller;
 
 import com.myapp.entity.User;
 import com.myapp.mail_utils.MessageProducer;
-import com.myapp.service.MailService;
 import com.myapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.jms.JMSException;
-import javax.validation.Valid;
 import java.util.List;
 
 @Controller

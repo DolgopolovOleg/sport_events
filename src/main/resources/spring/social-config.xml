@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:twitter="http://www.springframework.org/schema/social/twitter"
+       xmlns:social="http://www.springframework.org/schema/social"
+       xmlns:facebook="http://www.springframework.org/schema/social/facebook"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+       http://www.springframework.org/schema/social http://www.springframework.org/schema/social/spring-social.xsd
+       http://www.springframework.org/schema/social/twitter http://www.springframework.org/schema/social/spring-social-twitter.xsd
+       http://www.springframework.org/schema/social/facebook http://www.springframework.org/schema/social/spring-social-facebook.xsd">
+
+    <!--<bean id="connectionFactoryLocator" class="org.springframework.social.connect.support.ConnectionFactoryRegistry">-->
+        <!--<property username="connectionFactories">-->
+            <!--<list>-->
+               <!--<ref bean="facebookConnectionFactory"/>-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+    <!--<bean id="facebookConnectionFactory" class="org.springframework.social.facebook.connect.FacebookConnectionFactory">-->
+        <!--<constructor-arg username="appId" value="${facebook.app.id}"/>-->
+        <!--<constructor-arg username="appSecret" value="${facebook.app.secret}"/>-->
+    <!--</bean>-->
+    <!--&lt;!&ndash;<bean id="vkontakteConnectionFactory" class="org.springframework.social.vkontakte.connect.VKontakteConnectionFactory">&ndash;&gt;-->
+        <!--&lt;!&ndash;<constructor-arg username="clientId" value="${vkontakte.app.clientId}"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<constructor-arg username="clientSecret" value="${vkontakte.app.clientSecret}"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;</bean>&ndash;&gt;-->
+
+    <!--<bean id="usersConnectionRepository" class="com.myapp.service.impl.RepositoryUserDetailService"/>-->
+
+    <!--<bean id="connectionRepository"-->
+          <!--factory-bean="usersConnectionRepository"-->
+          <!--factory-method="loadUserByUsername"-->
+          <!--scope="request">-->
+        <!--<constructor-arg value="#{request.userPrincipal.username}"/>-->
+        <!--<aop:scoped-proxy proxy-target-class="false"/>-->
+    <!--</bean>-->
+
+    <context:property-placeholder location="classpath:spring-social.properties"/>
+
+    <facebook:config app-id="${facebook.app.id}" app-secret="${facebook.app.secret}" />
+
+    <!--<twitter:config app-id="${twitter.consumer.key}" app-secret="${twitter.consumer.secret}"/>-->
+
+    <social:jdbc-connection-repository/>
+
+    <!--<bean id="connectController"-->
+          <!--class="org.springframework.social.connect.web.ConnectController"-->
+          <!--autowire="constructor"/>-->
+</beans>

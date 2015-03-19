@@ -2,7 +2,8 @@
 SQLyog Ultimate v9.50 
 MySQL - 5.5.23 : Database - sport_events
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -58,14 +59,14 @@ DROP TABLE IF EXISTS `equipment`;
 
 CREATE TABLE `equipment` (
   `_id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` char(255) DEFAULT NULL,
+  `username` char(255) DEFAULT NULL,
   `icon` char(255) DEFAULT NULL,
   PRIMARY KEY (`_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 /*Data for the table `equipment` */
 
-insert  into `equipment`(`_id`,`name`,`icon`) values (1,'Турник','icon1'),(2,'Брусья','icon2'),(3,'Футбольное поле','icon3'),(4,'Баскетбольное поле','icon4'),(5,'Тенисный стол','icon5');
+insert  into `equipment`(`_id`,`username`,`icon`) values (1,'Турник','icon1'),(2,'Брусья','icon2'),(3,'Футбольное поле','icon3'),(4,'Баскетбольное поле','icon4'),(5,'Тенисный стол','icon5');
 
 /*Table structure for table `event` */
 
@@ -73,7 +74,7 @@ DROP TABLE IF EXISTS `event`;
 
 CREATE TABLE `event` (
   `_id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` char(255) DEFAULT NULL,
+  `username` char(255) DEFAULT NULL,
   `sport` int(11) DEFAULT NULL,
   `description` text,
   `place_id` int(11) DEFAULT NULL,
@@ -88,7 +89,7 @@ CREATE TABLE `event` (
 
 /*Data for the table `event` */
 
-insert  into `event`(`_id`,`name`,`sport`,`description`,`place_id`,`date_start`,`date_finish`) values (1,'first',1,'Some description to event',4,'2014-12-16 22:13:27','2014-12-16 22:13:29');
+insert  into `event`(`_id`,`username`,`sport`,`description`,`place_id`,`date_start`,`date_finish`) values (1,'first',1,'Some description to event',4,'2014-12-16 22:13:27','2014-12-16 22:13:29');
 
 /*Table structure for table `participant` */
 
@@ -116,7 +117,7 @@ DROP TABLE IF EXISTS `place`;
 
 CREATE TABLE `place` (
   `_id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` char(255) DEFAULT NULL,
+  `username` char(255) DEFAULT NULL,
   `longitude` double DEFAULT NULL,
   `latitude` double DEFAULT NULL,
   `description` text,
@@ -130,7 +131,7 @@ CREATE TABLE `place` (
 
 /*Data for the table `place` */
 
-insert  into `place`(`_id`,`name`,`longitude`,`latitude`,`description`,`creator`,`created`,`updated`) values (4,'first',111,111,'Changed description',1,'2015-02-16 22:03:33','2015-02-16 22:03:33'),(5,'second',222,222,'asdasdasd',1,'2015-02-16 22:03:33','2015-02-16 22:03:33'),(6,'first',111,111,'Changed description',1,'2015-02-22 17:54:17','2015-02-22 17:54:17'),(7,'first',111,111,'Changed description',1,'2015-02-22 18:12:29','2015-02-22 18:12:29'),(8,'first',111,111,'Changed description',1,'2015-02-22 18:14:40','2015-02-22 18:14:40'),(10,'first',111,111,'Changed description',1,'2015-02-22 19:44:45','2015-02-22 19:44:45');
+insert  into `place`(`_id`,`username`,`longitude`,`latitude`,`description`,`creator`,`created`,`updated`) values (4,'first',111,111,'Changed description',1,'2015-02-16 22:03:33','2015-02-16 22:03:33'),(5,'second',222,222,'asdasdasd',1,'2015-02-16 22:03:33','2015-02-16 22:03:33'),(6,'first',111,111,'Changed description',1,'2015-02-22 17:54:17','2015-02-22 17:54:17'),(7,'first',111,111,'Changed description',1,'2015-02-22 18:12:29','2015-02-22 18:12:29'),(8,'first',111,111,'Changed description',1,'2015-02-22 18:14:40','2015-02-22 18:14:40'),(10,'first',111,111,'Changed description',1,'2015-02-22 19:44:45','2015-02-22 19:44:45');
 
 /*Table structure for table `place_equipment` */
 
@@ -158,14 +159,14 @@ DROP TABLE IF EXISTS `sport`;
 
 CREATE TABLE `sport` (
   `_id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
+  `username` varchar(255) DEFAULT NULL,
   `icon` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `sport` */
 
-insert  into `sport`(`_id`,`name`,`icon`) values (1,'Футбол','icon'),(2,'Баскетбол','icon');
+insert  into `sport`(`_id`,`username`,`icon`) values (1,'Футбол','icon'),(2,'Баскетбол','icon');
 
 /*Table structure for table `user` */
 
@@ -173,7 +174,7 @@ DROP TABLE IF EXISTS `user`;
 
 CREATE TABLE `user` (
   `_id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` char(255) DEFAULT NULL,
+  `username` char(255) DEFAULT NULL,
   `sname` char(255) DEFAULT NULL,
   `phone` char(255) DEFAULT NULL,
   `email` char(255) DEFAULT NULL,
@@ -185,7 +186,7 @@ CREATE TABLE `user` (
 
 /*Data for the table `user` */
 
-insert  into `user`(`_id`,`name`,`sname`,`phone`,`email`,`password`,`enabled`) values (1,'Oleg','Dolgopolov','123123','allegamex@yandex.ru','202cb962ac59075b964b07152d234b70',1),(2,'Second','Second sname','123123','email','202cb962ac59075b964b07152d234b70',1),(24,'Oleg','Dolgopolov','+73453434345','alegamex@gmail.com','202cb962ac59075b964b07152d234b70',1),(25,'Olewga','Dolgopolov','123123','alleamex@yandex.ru','202cb962ac59075b964b07152d234b70',0),(27,'Dolgopolov','Oleg','+73455678245','allegamex@gmail.com','202cb962ac59075b964b07152d234b70',1);
+insert  into `user`(`_id`,`username`,`sname`,`phone`,`email`,`password`,`enabled`) values (1,'Oleg','Dolgopolov','123123','allegamex@yandex.ru','202cb962ac59075b964b07152d234b70',1),(2,'Second','Second sname','123123','email','202cb962ac59075b964b07152d234b70',1),(24,'Oleg','Dolgopolov','+73453434345','alegamex@gmail.com','202cb962ac59075b964b07152d234b70',1),(25,'Olewga','Dolgopolov','123123','alleamex@yandex.ru','202cb962ac59075b964b07152d234b70',0),(27,'Dolgopolov','Oleg','+73455678245','allegamex@gmail.com','202cb962ac59075b964b07152d234b70',1);
 
 /*Table structure for table `user_role` */
 

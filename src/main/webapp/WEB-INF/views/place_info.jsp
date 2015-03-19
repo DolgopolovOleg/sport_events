@@ -15,7 +15,7 @@
             <h1>Place</h1>
 
 
-            <p><u>Название</u> :${place.name}</p>
+            <p><u>Название</u> :${place.username}</p>
             <ul>
                 <li>
                     <u>Координаты</u> : ${place.longitude} - ${place.latitude}
@@ -25,13 +25,13 @@
                     <p>${place.description}</p>
                 </li>
                 <li>
-                    <u>Создатель</u> : ${place.creator.name}
+                    <u>Создатель</u> : ${place.creator.username}
                 </li>
                 <li>
                     <u>Оборудование:</u> :
                     <ul>
                         <c:forEach items="${place.equipments}" var="equipment">
-                            <li><b>${equipment.equipment.name}</b> x ${equipment.count}</li>
+                            <li><b>${equipment.equipment.username}</b> x ${equipment.count}</li>
                         </c:forEach>
                     </ul>
                 </li>
@@ -53,7 +53,7 @@
 
                     <%--<ul>--%>
                         <%--<c:forEach items="${comments}" var="comment">--%>
-                            <%--<li><b>${comment.user.name} :</b>--%>
+                            <%--<li><b>${comment.user.username} :</b>--%>
                                 <%--<p style="font-style:italic;">${comment.text}</p>--%>
                             <%--</li>--%>
                         <%--</c:forEach>--%>

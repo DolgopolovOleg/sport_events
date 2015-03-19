@@ -4,7 +4,6 @@ package com.myapp.controller;
 import com.myapp.common.Comments;
 import com.myapp.entity.Comment;
 import com.myapp.entity.Event;
-import com.myapp.entity.User;
 //import com.myapp.entity.extended.EventView;
 //import com.myapp.entity.extended.ParticipantView;
 //import com.myapp.entity.extended.PlaceView;

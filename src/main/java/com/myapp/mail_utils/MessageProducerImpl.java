@@ -4,15 +4,11 @@ package com.myapp.mail_utils;
 import com.myapp.entity.Activation;
 import com.myapp.entity.Event;
 import com.myapp.entity.User;
-import org.apache.velocity.app.VelocityEngine;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
-import org.springframework.jms.support.JmsUtils;
 import org.springframework.stereotype.Service;
 
 import javax.jms.*;
-import java.util.Map;
 
 
 @Service("mailProducer")

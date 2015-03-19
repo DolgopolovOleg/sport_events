@@ -16,7 +16,7 @@
             <ul>
                 <c:forEach items="${places}" var="place">
                     <li>
-                        <a href="/places/${place._id}">${place.name}</a>
+                        <a href="/places/${place._id}">${place.username}</a>
                         <sec:authorize access="hasRole('ADMIN')">
                             (<a href="/places/delete?id=${place._id}">Удалить</a>)
                         </sec:authorize>

@@ -15,8 +15,8 @@
             <ul>
 
                 <form method="GET" action="/activateUser">
-                    <input type="text" name="activationCode" size="30" />
-                    <input type="hidden" name="userID" value="${user._id}" />
+                    <input type="text" username="activationCode" size="30" />
+                    <input type="hidden" username="userID" value="${user._id}" />
                     <input type="submit" value="Активировать" />
                 </form>
             </ul>

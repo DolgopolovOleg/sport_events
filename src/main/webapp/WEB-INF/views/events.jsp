@@ -16,7 +16,7 @@
             <ul>
                 <c:forEach items="${events}" var="event">
                     <li>
-                        <a href="/events/${event._id}">${event.name}</a> (<a href="/events/delete?eventID=${event._id}">Удалить</a>")
+                        <a href="/events/${event._id}">${event.username}</a> (<a href="/events/delete?eventID=${event._id}">Удалить</a>")
                     </li>
                 </c:forEach>
             </ul>

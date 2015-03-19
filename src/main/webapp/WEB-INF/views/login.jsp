@@ -9,10 +9,10 @@
 </head>
 <body>
     <form action="/authentication" method="post">
-
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <p>
-            <label for="email">Login: </label>
-            <input type="email" id="email" name="email" />
+            <label for="username">Login: </label>
+            <input type="username" id="username" name="username" />
         </p>
 
         <p>
@@ -28,14 +28,16 @@
             <input type="submit" value="Login" />
         </p>
 
-        <c:if test="${param.error == 'invalidLogin'}">
-            <p style="color: red;">Invalid login</p>
-        </c:if>
+            <c:if test="${param.error == 'invalidLogin'}">
+                <p style="color: red;">Invalid login</p>
+            </c:if>
 
-        <c:if test="${param.error == 'loginRequired'}">
-            <p style="color: blue;">Invalid login</p>
-            Login required!
+            <c:if test="${param.error == 'loginRequired'}">
+                <p style="color: blue;">Invalid login</p>
+                Login required!
         </c:if>
     </form>
+
+    <a href="${pageContext.request.contextPath}/auth/facebook"> Facebook connect</a>
 </body>
 </html>

@@ -6,6 +6,8 @@ import com.myapp.entity.User;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+
 @Repository
 public class UserDaoImpl extends AbstractDaoImpl<User, Integer> implements UserDao{
 
@@ -14,18 +16,15 @@ public class UserDaoImpl extends AbstractDaoImpl<User, Integer> implements UserD
     }
 
     @Override
-    public void save(User user) {
+    public User save(User user) {
         saveOrUpdate(user);
-    }
-
-    @Override
-    public User findByUsername(String username) {
-        return (User) super.findByCriteria(Restrictions.eq("username", (Object) username)).get(0);
+        return user;
     }
 
     @Override
     public User findByEmail(String email) {
-        return (User) super.findByCriteria(Restrictions.eq("email", (Object) email)).get(0);
+        ArrayList<User> users = (ArrayList<User>) super.findByCriteria(Restrictions.eq("email", (Object) email));
+        return users.size() == 0 ? null : users.get(0);
     }
 
 }

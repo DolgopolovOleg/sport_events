@@ -1,6 +1,6 @@
 package com.myapp.common;
 
 
-public enum  RoleList {
+public enum RoleList {
     ADMIN, USER
 }

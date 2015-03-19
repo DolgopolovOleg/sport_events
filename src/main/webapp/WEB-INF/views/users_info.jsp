@@ -13,7 +13,7 @@
         <div class="body">
             <h1>User</h1>
 
-            ${user.name}
+            ${user.username}
 
         </div>
 

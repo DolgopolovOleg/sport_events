@@ -3,12 +3,8 @@ package com.myapp.dao.impl;
 
 import com.myapp.dao.EquipmentDao;
 import com.myapp.entity.Equipment;
-import com.myapp.entity.User;
-import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 public class EquipmentDaoImpl extends AbstractDaoImpl<Equipment, Integer> implements EquipmentDao{

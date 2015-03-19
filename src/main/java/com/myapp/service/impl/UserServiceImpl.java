@@ -1,15 +1,14 @@
 package com.myapp.service.impl;
 
 
-//import com.myapp.dao.ParticipantDao;
 import com.myapp.common.ActivationCodeReason;
 import com.myapp.common.RoleList;
 import com.myapp.dao.ActivationDao;
 import com.myapp.dao.UserDao;
 import com.myapp.entity.*;
-//import com.myapp.entity.extended.ParticipantView;
-import com.myapp.helpers.PasswordHelper;
 import com.myapp.mail_utils.MessageProducer;
+import com.myapp.registration.DuplicateEmailException;
+import com.myapp.registration.RegistrationForm;
 import com.myapp.service.UserService;
 import org.hibernate.criterion.Example;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +16,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.social.connect.UserProfile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.joda.time.DateTime;
 
 import java.util.List;
 
@@ -34,6 +36,9 @@ public class UserServiceImpl implements UserService, UserDetailsService{
 
     @Autowired
     private MessageProducer messageProducer;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 //    @Autowired
 //    private ParticipantDao participantDao;
@@ -64,21 +69,29 @@ public class UserServiceImpl implements UserService, UserDetailsService{
     }
 
     @Override
-    public void createNewUser(User user) {
-        //TODO: save password in MD5
-        //TODO: send password to user
-
-        //create PasswordHelper entity
-        PasswordHelper passwordHelper = new PasswordHelper();
-        //set MD5 password from user password
-        user.setPassword( passwordHelper.encode(user.getPassword()) );
+    public User createNewUser(User user) {
         user.setEnabled(false);
+        DateTime now = DateTime.now();
+        user.setCreationTime(now);
+        user.setModificationTime(now);
         this.save(user);
+        return user;
+//        Activation activation = new Activation(user, ActivationCodeReason.REGISTRATION);
+//        activationDao.saveOrUpdate(activation);
+        //send message to user
+//        messageProducer.sendMessages(activation.getUser());
+    }
+
+    @Override
+    public User registrateNewUser(User user) {
+        User createdUser = this.createNewUser(user);
         Activation activation = new Activation(user, ActivationCodeReason.REGISTRATION);
         activationDao.saveOrUpdate(activation);
+
         //send message to user
-        messageProducer.sendUserRegistrationMessage(activation);
-//        messageProducer.sendMessages(activation.getUser());
+        messageProducer.sendMessages(activation.getUser());
+
+        return user;
     }
 
     @Override
@@ -98,7 +111,7 @@ public class UserServiceImpl implements UserService, UserDetailsService{
 
     @Override
     public void setRole(User user, RoleList role) {
-        UserRole userRole = new UserRole(user, role);
+        com.myapp.entity.UserRole userRole = new com.myapp.entity.UserRole(user, role);
         user.getUserRole().add(userRole);
         userDao.save(user);
     }
@@ -119,5 +132,73 @@ public class UserServiceImpl implements UserService, UserDetailsService{
         User user = userDao.findByEmail(s);
         if(user == null) throw new UsernameNotFoundException("username: " + s + "not found!");
         return user;
+    }
+
+
+    @Transactional
+    @Override
+    public User registerNewUserAccount(RegistrationForm userAccountData) throws DuplicateEmailException {
+        if (emailExist(userAccountData.getEmail())) {
+            throw new DuplicateEmailException("The email address: " + userAccountData.getEmail() + " is already in use.");
+        }
+
+        String encodedPassword = encodePassword(userAccountData);
+
+        User.Builder user = User.getBuilder()
+                .email(userAccountData.getEmail())
+                .firstName(userAccountData.getFirstName())
+                .lastName(userAccountData.getLastName())
+                .password(encodedPassword);
+
+        if (userAccountData.isSocialSignIn()) {
+            user.signInProvider(userAccountData.getSignInProvider());
+        }
+
+        User registered = user.build();
+        registered = this.createNewUser(registered);
+
+        if(registered.getSignInProvider() != null){
+            Activation activation = new Activation(registered, ActivationCodeReason.REGISTRATION);
+            activationDao.saveOrUpdate(activation);
+
+            //send message to user
+            messageProducer.sendMessages(activation.getUser());
+        }
+
+
+        return registered;
+    }
+
+    @Override
+    public User createUserFromUserProfile(UserProfile userProfile) {
+        User user = new User();
+//        user.set
+        user.setFirstName(userProfile.getFirstName() == null ? null : userProfile.getFirstName());
+        user.setLastName(userProfile.getLastName() == null ? null : userProfile.getLastName());
+        user.setEmail(userProfile.getEmail() == null ? null : userProfile.getEmail());
+        user.setEnabled(true);
+        user = userDao.save(user);
+        return user;
+    }
+
+
+    private boolean emailExist(String email) {
+        User user = userDao.findByEmail(email);
+
+        if (user != null) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private String encodePassword(RegistrationForm dto) {
+        String encodedPassword = null;
+
+        if (dto.isNormalRegistration()) {
+            encodedPassword = passwordEncoder.encode(dto.getPassword());
+        }
+
+        return encodedPassword;
     }
 }

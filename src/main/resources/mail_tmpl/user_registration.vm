@@ -3,7 +3,7 @@
       xmlns="http://www.w3.org/1999/xhtml" style="margin: 0; padding: 0;">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="format-detection" content="telephone=no" />
+    <meta username="format-detection" content="telephone=no" />
     <title>${header}</title>
 </head>
 
@@ -11,7 +11,7 @@
 
     <h1>${header}</h1>
     <p>
-        Уважаемый <b>${user.name} ${user.sname}</b> вы зарегистрировались на сайте SportGrounds.com.<br />
+        Уважаемый <b>${user.username} ${user.sname}</b> вы зарегистрировались на сайте SportGrounds.com.<br />
         Для того что бы активировать аккаунт скопируйте этот ключ <b>${activationCode}</b> в поле ввода на
         <a href="http://localhost:18080/activation?userID=${user.id}">странице активации</a>
         или пройдите по

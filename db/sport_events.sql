@@ -2,7 +2,8 @@
 SQLyog Ultimate v9.50 
 MySQL - 5.5.23 : Database - sport_events
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -42,14 +43,14 @@ DROP TABLE IF EXISTS `equipment`;
 
 CREATE TABLE `equipment` (
   `_id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` char(255) DEFAULT NULL,
+  `username` char(255) DEFAULT NULL,
   `icon` char(255) DEFAULT NULL,
   PRIMARY KEY (`_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 /*Data for the table `equipment` */
 
-insert  into `equipment`(`_id`,`name`,`icon`) values (1,'Турник','icon1'),(2,'Брусья','icon2'),(3,'Футбольное поле','icon3'),(4,'Баскетбольное поле','icon4'),(5,'Тенисный стол','icon5');
+insert  into `equipment`(`_id`,`username`,`icon`) values (1,'Турник','icon1'),(2,'Брусья','icon2'),(3,'Футбольное поле','icon3'),(4,'Баскетбольное поле','icon4'),(5,'Тенисный стол','icon5');
 
 /*Table structure for table `event` */
 
@@ -57,7 +58,7 @@ DROP TABLE IF EXISTS `event`;
 
 CREATE TABLE `event` (
   `_id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` char(255) DEFAULT NULL,
+  `username` char(255) DEFAULT NULL,
   `sport` int(11) DEFAULT NULL,
   `description` text,
   `place_id` int(11) DEFAULT NULL,
@@ -72,7 +73,7 @@ CREATE TABLE `event` (
 
 /*Data for the table `event` */
 
-insert  into `event`(`_id`,`name`,`sport`,`description`,`place_id`,`date_start`,`date_finish`) values (1,'first',1,'Some description to event',4,'2014-12-16 22:13:27','2014-12-16 22:13:29');
+insert  into `event`(`_id`,`username`,`sport`,`description`,`place_id`,`date_start`,`date_finish`) values (1,'first',1,'Some description to event',4,'2014-12-16 22:13:27','2014-12-16 22:13:29');
 
 /*Table structure for table `participant` */
 
@@ -100,7 +101,7 @@ DROP TABLE IF EXISTS `place`;
 
 CREATE TABLE `place` (
   `_id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` char(255) DEFAULT NULL,
+  `username` char(255) DEFAULT NULL,
   `longitude` double DEFAULT NULL,
   `latitude` double DEFAULT NULL,
   `description` text,
@@ -112,7 +113,7 @@ CREATE TABLE `place` (
 
 /*Data for the table `place` */
 
-insert  into `place`(`_id`,`name`,`longitude`,`latitude`,`description`,`creator`) values (4,'first',111,111,'Some description to place',2),(5,'second',222,222,'asdasdasd',1);
+insert  into `place`(`_id`,`username`,`longitude`,`latitude`,`description`,`creator`) values (4,'first',111,111,'Some description to place',2),(5,'second',222,222,'asdasdasd',1);
 
 /*Table structure for table `place_equipment` */
 
@@ -154,14 +155,14 @@ DROP TABLE IF EXISTS `sport`;
 
 CREATE TABLE `sport` (
   `_id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
+  `username` varchar(255) DEFAULT NULL,
   `icon` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `sport` */
 
-insert  into `sport`(`_id`,`name`,`icon`) values (1,'Футбол','icon'),(2,'Баскетбол','icon');
+insert  into `sport`(`_id`,`username`,`icon`) values (1,'Футбол','icon'),(2,'Баскетбол','icon');
 
 /*Table structure for table `user` */
 
@@ -169,7 +170,7 @@ DROP TABLE IF EXISTS `user`;
 
 CREATE TABLE `user` (
   `_id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` char(255) DEFAULT NULL,
+  `username` char(255) DEFAULT NULL,
   `sname` char(255) DEFAULT NULL,
   `nickname` char(255) DEFAULT NULL,
   `phone` char(31) DEFAULT NULL,
@@ -182,7 +183,7 @@ CREATE TABLE `user` (
 
 /*Data for the table `user` */
 
-insert  into `user`(`_id`,`name`,`sname`,`nickname`,`phone`,`email`,`username`,`password`,`enabled`) values (1,'Oleg','Dolgopolov','Allega','123123','allegameex@yandex.ru','oleg','202cb962ac59075b964b07152d234b70',1),(2,'Second','Second sname','snickname','123123','email','second','202cb962ac59075b964b07152d234b70',1);
+insert  into `user`(`_id`,`username`,`sname`,`nickname`,`phone`,`email`,`username`,`password`,`enabled`) values (1,'Oleg','Dolgopolov','Allega','123123','allegameex@yandex.ru','oleg','202cb962ac59075b964b07152d234b70',1),(2,'Second','Second sname','snickname','123123','email','second','202cb962ac59075b964b07152d234b70',1);
 
 /*Table structure for table `user_role` */
 

@@ -35,7 +35,7 @@ public class Activation implements Serializable{
         this.user = user;
         PasswordHelper passwordHelper = new PasswordHelper();
         Date date = new Date();
-        String generatedActivationCode = date.toString() + user.getEmail() + user.getPassword();
+        String generatedActivationCode = date.toString() + user.getUsername() + user.getPassword();
         generatedActivationCode = passwordHelper.encode(generatedActivationCode);
 //        this.activationCode = activationCode;
         this.activationCode = generatedActivationCode;

@@ -20,9 +20,9 @@
     <!--</bean>-->
 
     <!--<bean id="jmsContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">-->
-        <!--<property name="connectionFactory" ref="connectionFactory" />-->
-        <!--<property name="destination" ref="queue" />-->
-        <!--<property name="messageListener" ref="messageListener" />-->
+        <!--<property username="connectionFactory" ref="connectionFactory" />-->
+        <!--<property username="destination" ref="queue" />-->
+        <!--<property username="messageListener" ref="messageListener" />-->
     <!--</bean>-->
 
     <!--<bean id="messageListener" class="com.myapp.mail_utils.MessageListenerImpl"/>-->

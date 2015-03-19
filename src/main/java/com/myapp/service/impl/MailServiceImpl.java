@@ -31,7 +31,7 @@ public class MailServiceImpl implements MailService {
     @Override
     public void sendUserMail(String to, User user){
         SimpleMailMessage message = new SimpleMailMessage();
-        String userName = user.getName();
+        String userName = user.getUsername();
         message.setFrom("noreply@sportgrounds.com");
         message.setTo(to);
         message.setSubject("First letter");
@@ -44,12 +44,12 @@ public class MailServiceImpl implements MailService {
         try{
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
-            helper.setFrom("noreply@spitter.com");
+            helper.setFrom("33druga@gmil.com");
 //            helper.setTo("allegamex@gmail.com");
             User user = activation.getUser();
-            if(user.getEmail()==null)
+            if(user.getUsername()==null)
                 return;
-            helper.setTo(user.getEmail());
+            helper.setTo(user.getUsername());
             helper.setSubject("Thank you for registration.");
 
             Map<String, Object> properties = MessagePropertiesCompiler.compileUserRegistationProperties(activation);

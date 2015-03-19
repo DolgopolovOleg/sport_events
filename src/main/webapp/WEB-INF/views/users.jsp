@@ -16,7 +16,7 @@
             <ul>
                 <c:forEach items="${users}" var="user">
                     <li>
-                        <a href="/users/${user._id}">${user.name}</a>
+                        <a href="/users/${user._id}">${user.username}</a>
                     </li>
                 </c:forEach>
             </ul>

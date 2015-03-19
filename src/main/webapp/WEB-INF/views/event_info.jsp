@@ -15,9 +15,9 @@
             <h1>Event</h1>
 
 
-            <p>${event.name}</p>
+            <p>${event.username}</p>
             <ul>
-                <li><u>Играем в </u> : ${event.sport.name}</li>
+                <li><u>Играем в </u> : ${event.sport.username}</li>
                 <%--<li><u>Начинам </u> : ${event.date_start}</li>--%>
                 <li><u>Описание</u> :
                     <p>${event.description}</p>
@@ -29,11 +29,11 @@
                         <li><u>Описание</u> :
                             <p>${place.description}</p>
                         </li>
-                        <li><u>Создатель</u> : ${place.creator.name}</li>
+                        <li><u>Создатель</u> : ${place.creator.username}</li>
                         <li><u>Оборудование</u> :
                             <ul>
                                 <c:forEach items="${place.equipments}" var="equipment">
-                                    <li><b>${equipment.equipment.name}</b> x ${equipment.count}</li>
+                                    <li><b>${equipment.equipment.username}</b> x ${equipment.count}</li>
                                 </c:forEach>
                             </ul>
                         </li>
@@ -44,7 +44,7 @@
                     <u>Участники</u> :
                     <ul>
                         <c:forEach items="${event.participants}" var="participant">
-                            <li><b>${participant.user.name}</b> (${participant.role})</li>
+                            <li><b>${participant.user.username}</b> (${participant.role})</li>
                         </c:forEach>
                     </ul>
                 </li>
@@ -53,7 +53,7 @@
                     <u>Комменты</u> :
                     <ul>
                         <c:forEach items="${eventView.comments}" var="comment">
-                            <li><b>${comment.user.name} :</b>
+                            <li><b>${comment.user.username} :</b>
                                 <p style="font-style:italic;">${comment.text}</p>
                             </li>
                         </c:forEach>
