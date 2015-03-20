@@ -20,7 +20,7 @@ public class EquipmentDaoImpl extends AbstractDaoImpl<Equipment, Integer> implem
 
     @Override
     public Equipment findByName(String name) {
-        return (Equipment) super.findByCriteria(Restrictions.eq("name", (Object) name)).get(0);
+        return (Equipment) super.findByCriterion(Restrictions.eq("name", (Object) name)).get(0);
     }
 
 }

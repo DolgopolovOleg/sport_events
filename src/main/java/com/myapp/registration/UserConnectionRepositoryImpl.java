@@ -4,27 +4,43 @@ import com.myapp.common.SocialMediaService;
 import com.myapp.dao.UserConnectionDao;
 import com.myapp.entity.UserConnection;
 import com.myapp.service.UserConnectionService;
+import com.myapp.service.UserService;
+import com.myapp.utils.SecurityUtil;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.social.connect.*;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 import javax.annotation.Resource;
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
 @Transactional(readOnly = true)
-public class UserConnectionRepositoryImpl implements ExtendedConnectionRepository {
+public class UserConnectionRepositoryImpl implements ConnectionRepository {
+
+    public UserConnectionRepositoryImpl() {
+    }
 
     private String userId;
     private UserConnectionDao userConnectionDao;
+
     private ConnectionFactoryLocator connectionFactoryLocator;
     private TextEncryptor textEncryptor;
 
+    @Autowired
+    private SessionFactory sessionFactory;
+
+    @Resource(name = "userService")
+    private UserService userService;
+
     @Resource(name = "userConnectionService")
-    private UserConnectionService socialUserService;
+    private UserConnectionService userConnectionService;
 
     private String vk = SocialMediaService.VKONTAKTE.name().toLowerCase();
     private String fb = SocialMediaService.FACEBOOK.name().toLowerCase();
@@ -133,10 +149,9 @@ public class UserConnectionRepositoryImpl implements ExtendedConnectionRepositor
     @Transactional(readOnly = false)
     public void addConnection(Connection<?> connection) {
         ConnectionData connectionData = connection.createData();
-
         // check if this social account is already connected to a local account
         List<String> userIds = userConnectionDao.findUserIdsByProviderIdAndProviderUserId(connectionData.getProviderId(), connectionData.getProviderUserId());
-        if (!userIds.isEmpty()) {
+        if (userIds !=null || !userIds.isEmpty()) {
             throw new DuplicateConnectionException(new ConnectionKey(connectionData.getProviderId(), connectionData.getProviderUserId()));
         }
 
@@ -154,6 +169,7 @@ public class UserConnectionRepositoryImpl implements ExtendedConnectionRepositor
         int nextRank = (maxRank == null ? 0 : maxRank + 1);
 
         UserConnection socialUser = new UserConnection();
+        userId = userService.getLoggedUser().getUserId();
         socialUser.setUserId(userId);
         socialUser.setProviderId(connectionData.getProviderId());
         socialUser.setProviderUserId(connectionData.getProviderUserId());

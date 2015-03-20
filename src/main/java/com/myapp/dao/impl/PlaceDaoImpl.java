@@ -16,7 +16,7 @@ public class PlaceDaoImpl extends AbstractDaoImpl<Place, Integer> implements Pla
 
     @Override
     public List<Place> findAllByCreatorId(Integer creatorId) {
-        return super.findByCriteria(Restrictions.eq("creator", (Object) creatorId));
+        return super.findByCriterion(Restrictions.eq("creator", (Object) creatorId));
     }
 
 }

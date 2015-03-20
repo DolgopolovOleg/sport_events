@@ -29,6 +29,6 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public Activation findByUserID(Integer userID) {
         User user = userDao.findById(userID);
-        return (Activation) activationDao.findByCriteria( Restrictions.eq("user", user) ).get(0);
+        return (Activation) activationDao.findByCriterion(Restrictions.eq("user", user)).get(0);
     }
 }

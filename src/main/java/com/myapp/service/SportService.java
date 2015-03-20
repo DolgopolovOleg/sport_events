@@ -10,4 +10,5 @@ public interface SportService {
     void save(Sport sport);
     Sport findByName(String name);
     List<Sport> findAll();
+
 }

@@ -6,11 +6,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Table(name = "UserConnection")
-public class UserConnection {
+public class UserConnection implements Serializable {
 
     @Id
     @GeneratedValue

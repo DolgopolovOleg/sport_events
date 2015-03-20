@@ -6,6 +6,7 @@ import com.myapp.common.RoleList;
 import com.myapp.dao.ActivationDao;
 import com.myapp.dao.UserDao;
 import com.myapp.entity.*;
+import com.myapp.helpers.PasswordHelper;
 import com.myapp.mail_utils.MessageProducer;
 import com.myapp.registration.DuplicateEmailException;
 import com.myapp.registration.RegistrationForm;
@@ -171,12 +172,19 @@ public class UserServiceImpl implements UserService, UserDetailsService{
 
     @Override
     public User createUserFromUserProfile(UserProfile userProfile) {
+        PasswordHelper ph = new PasswordHelper();
         User user = new User();
-//        user.set
         user.setFirstName(userProfile.getFirstName() == null ? null : userProfile.getFirstName());
         user.setLastName(userProfile.getLastName() == null ? null : userProfile.getLastName());
         user.setEmail(userProfile.getEmail() == null ? null : userProfile.getEmail());
         user.setEnabled(true);
+
+        DateTime now = DateTime.now();
+        user.setCreationTime(now);
+        user.setModificationTime(now);
+
+        String beforeEncodeUserId = user.getFirstName() + user.getLastName() + user.getCreationTime().toString();
+        user.setUserId(ph.encode(beforeEncodeUserId));
         user = userDao.save(user);
         return user;
     }

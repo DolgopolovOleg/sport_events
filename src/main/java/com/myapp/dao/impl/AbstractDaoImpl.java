@@ -43,7 +43,7 @@ public abstract class AbstractDaoImpl<E, I extends Serializable> implements Abst
     }
 
     @Override
-    public List<E> findByCriteria(Criterion criterion) {
+    public List<E> findByCriterion(Criterion criterion) {
         Criteria criteria = getCurrentSession().createCriteria(entityClass);
         criteria.add(criterion);
         return criteria.list();

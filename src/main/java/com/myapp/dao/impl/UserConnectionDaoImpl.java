@@ -2,7 +2,6 @@ package com.myapp.dao.impl;
 
 
 import com.myapp.dao.UserConnectionDao;
-import com.myapp.entity.Event;
 import com.myapp.entity.UserConnection;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Disjunction;
@@ -27,7 +26,7 @@ public class UserConnectionDaoImpl extends AbstractDaoImpl<UserConnection, Integ
     private static final String RANK = "rank";
 
     private Criteria createCriteria() {
-        return getCurrentSession().createCriteria(UserConnection.class);
+        return super.getCurrentSession().createCriteria(UserConnection.class);
     }
 
     @Override
@@ -42,12 +41,12 @@ public class UserConnectionDaoImpl extends AbstractDaoImpl<UserConnection, Integ
 
     @Override
     public List<UserConnection> findByProviderId(String providerId) {
-        return (List<UserConnection>) super.findByCriteria(Restrictions.eq(PROVIDER_ID, (Object) providerId));
+        return (List<UserConnection>) super.findByCriterion(Restrictions.eq(PROVIDER_ID, (Object) providerId));
     }
 
     @Override
     public List<UserConnection> findByUserId(String userId) {
-        return (List<UserConnection>) super.findByCriteria(Restrictions.eq(USER_ID, (Object) userId));
+        return (List<UserConnection>) super.findByCriterion(Restrictions.eq(USER_ID, (Object) userId));
     }
 
     @Override
@@ -105,7 +104,12 @@ public class UserConnectionDaoImpl extends AbstractDaoImpl<UserConnection, Integ
 
     @Override
     public List<String> findUserIdsByProviderIdAndProviderUserId(String providerId, String providerUserId) {
-        return null;
+        List<UserConnection> socialUsers = (List<UserConnection>) createCriteria().add(Restrictions.eq(PROVIDER_ID, providerId)).add(Restrictions.eq(PROVIDER_USER_ID, providerUserId)).list();
+        List<String> userIds = new ArrayList<String>(socialUsers.size());
+        for (UserConnection socialUser : socialUsers) {
+            userIds.add(socialUser.getUserId());
+        }
+        return userIds;
     }
 
     @Override

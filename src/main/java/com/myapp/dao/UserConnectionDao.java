@@ -7,7 +7,7 @@ import org.springframework.util.MultiValueMap;
 import java.util.List;
 import java.util.Set;
 
-public interface UserConnectionDao {
+public interface UserConnectionDao  extends AbstractDao<UserConnection, Integer>{
 
     public void save(UserConnection socialUser);
 

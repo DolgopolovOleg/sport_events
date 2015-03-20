@@ -14,6 +14,6 @@ public class SportDaoImpl extends AbstractDaoImpl<Sport, Integer> implements Spo
 
     @Override
     public Sport findByName(String name) {
-        return (Sport) super.findByCriteria(Restrictions.eq("name", (Object) name)).get(0);
+        return (Sport) super.findByCriterion(Restrictions.eq("name", (Object) name)).get(0);
     }
 }

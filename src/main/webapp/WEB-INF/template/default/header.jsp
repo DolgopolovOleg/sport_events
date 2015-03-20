@@ -112,6 +112,7 @@ the FB.login() function when clicked.
     <sec:authorize access="isAnonymous()">
         <a href="/login">Login</a> /
         <a href="/user/register">Registration</a>
+        <a href="/authenticate/facebook">Facebook cennect</a>
     </sec:authorize>
 
     <sec:authorize access="isAuthenticated()">

@@ -16,7 +16,7 @@ public class ActivationDaoImpl extends AbstractDaoImpl<Activation, Integer> impl
 
     @Override
     public Activation findByUser(User user) {
-        return (Activation) super.findByCriteria(Restrictions.eq("user", user));
+        return (Activation) super.findByCriterion(Restrictions.eq("user", user));
     }
 
 }

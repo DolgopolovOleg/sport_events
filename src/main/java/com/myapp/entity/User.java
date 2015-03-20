@@ -23,7 +23,10 @@ public class User extends BaseEntity<Long> implements UserDetails, SocialUserDet
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long _id;
 
-    @Column(name = "email", length = 100, nullable = false, unique = true)
+    @Column (name = "_id")
+    private String userId;
+
+    @Column(name = "email", length = 100, nullable = false)
     private String email;
 
     @Column(name = "first_name", length = 100,nullable = false)
@@ -192,9 +195,18 @@ public class User extends BaseEntity<Long> implements UserDetails, SocialUserDet
         return new Builder();
     }
 
+//    @Override
+//    public String getUserId() {
+//        return this.get_id().toString();
+//    }
+
     @Override
     public String getUserId() {
-        return this.get_id().toString();
+        return this.userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public static class Builder {

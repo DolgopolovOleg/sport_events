@@ -1,6 +1,7 @@
 package com.myapp.dao;
 
 
+import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Example;
 
@@ -12,7 +13,7 @@ public interface AbstractDao<E, I extends Serializable> {
     E findById(I id);
     void saveOrUpdate(E e);
     void delete(E e);
-    List<E> findByCriteria(Criterion criterion);
+    List<E> findByCriterion(Criterion criterion);
     List<E> findAll();
     List<E> findAll(Example example);
 }
