@@ -34,7 +34,10 @@
         <remember-me user-service-ref="userService" key="lesson_key" />
 
         <custom-filter ref="socialAuthenticationFilter" before="PRE_AUTH_FILTER" />
+        <custom-filter ref="corsFilter" before="LAST" />
     </http>
+
+    <beans:bean id="corsFilter" class="com.myapp.rest.filters.SimpleCORSFilter" />
 
     <beans:bean id="authUserDetailsService" class="com.myapp.service.impl.UserServiceImpl" />
 

@@ -1,4 +1,4 @@
-package com.myapp.controller.rest.version1;
+package com.myapp.rest.version1;
 
 import com.myapp.entity.Place;
 import com.myapp.service.PlaceService;

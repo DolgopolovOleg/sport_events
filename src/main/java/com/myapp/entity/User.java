@@ -23,7 +23,7 @@ public class User extends BaseEntity<Long> implements UserDetails, SocialUserDet
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long _id;
 
-    @Column (name = "_id")
+    @Column (name = "userId")
     private String userId;
 
     @Column(name = "email", length = 100, nullable = false)
