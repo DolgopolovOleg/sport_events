@@ -33,7 +33,7 @@
 
         <remember-me user-service-ref="userService" key="lesson_key" />
 
-        <custom-filter ref="socialAuthenticationFilter" before="PRE_AUTH_FILTER" />
+        <!--<custom-filter ref="socialAuthenticationFilter" before="PRE_AUTH_FILTER" />-->
         <custom-filter ref="corsFilter" before="LAST" />
     </http>
 
@@ -60,25 +60,25 @@
         Configures the social authentication filter which integrates Spring Social
         with Spring Security.
     -->
-    <beans:bean id="socialAuthenticationFilter" class="org.springframework.social.security.SocialAuthenticationFilter">
-        <beans:constructor-arg index="0" ref="authenticationManager"/>
-        <beans:constructor-arg index="1" ref="userIdSource"/>
-        <beans:constructor-arg index="2" ref="usersConnectionRepository"/>
-        <beans:constructor-arg index="3" ref="connectionFactoryLocator"/>
+    <!--<beans:bean id="socialAuthenticationFilter" class="org.springframework.social.security.SocialAuthenticationFilter">-->
+        <!--<beans:constructor-arg index="0" ref="authenticationManager"/>-->
+        <!--<beans:constructor-arg index="1" ref="userIdSource"/>-->
+        <!--<beans:constructor-arg index="2" ref="usersConnectionRepository"/>-->
+        <!--<beans:constructor-arg index="3" ref="connectionsFactoryLocator"/>-->
 
-        <!-- Sets the url of the registration form. -->
-        <beans:property name="signupUrl" value="/user/register"/>
-        <beans:property name="postLoginUrl" value="/signin"/>
-        <beans:property name="connectionAddedRedirectUrl" value="/connectionAddedRedirectUrl"/>
+        <!--&lt;!&ndash; Sets the url of the registration form. &ndash;&gt;-->
+        <!--<beans:property name="signupUrl" value="/user/register"/>-->
+        <!--<beans:property name="postLoginUrl" value="/signin"/>-->
+        <!--<beans:property name="connectionAddedRedirectUrl" value="/connectionAddedRedirectUrl"/>-->
 
-        <!--<beans:property name="authenticationSuccessHandler" ref="authenticationSuccessHandler" />-->
-        <!--<beans:property name="authenticationFailureHandler" ref="authenticationFailureHandler"/>-->
-    </beans:bean>
+        <!--&lt;!&ndash;<beans:property name="authenticationSuccessHandler" ref="authenticationSuccessHandler" />&ndash;&gt;-->
+        <!--&lt;!&ndash;<beans:property name="authenticationFailureHandler" ref="authenticationFailureHandler"/>&ndash;&gt;-->
+    <!--</beans:bean>-->
 
     <beans:bean id="authenticationSuccessHandler" class="com.myapp.registration.CustomSuccessHandler"/>
     <beans:bean id="authenticationFailureHandler" class="com.myapp.registration.CustomFailureHandler"/>
 
-    <beans:bean id="connectionsFactoryLocator"
+    <beans:bean id="connectionFactoryLocator"
           class="org.springframework.social.connect.support.ConnectionFactoryRegistry">
         <beans:property name="connectionFactories">
             <beans:list>
@@ -93,7 +93,7 @@
     <beans:bean id="connectController"
           class="com.myapp.controller.SocialController">
         <beans:constructor-arg name="connectionRepository" ref="connectionRepository" />
-        <beans:constructor-arg name="connectionFactoryLocator" ref="connectionsFactoryLocator" />
+        <beans:constructor-arg name="connectionFactoryLocator" ref="connectionFactoryLocator" />
     </beans:bean>
 
     <!--

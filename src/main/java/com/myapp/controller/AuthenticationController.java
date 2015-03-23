@@ -99,7 +99,7 @@ public class AuthenticationController {
                 // if connection not exist
                 currentUser = userService.createUserFromUserProfile(connection.fetchUserProfile());
                 SecurityUtil.logInUser(currentUser);
-                userConnectionService.addConnection(connection, currentUser.get_id().toString());
+                userConnectionService.addConnection(connection, currentUser.getUserId().toString());
             }else{
                 // if connection exist
 
