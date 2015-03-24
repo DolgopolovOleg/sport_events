@@ -74,9 +74,8 @@ public class UserConnectionDaoImpl extends AbstractDaoImpl<UserConnection, Integ
     }
 
     @Override
-    public UserConnection get(String userId, String providerId, String providerUserId) {
+    public UserConnection get(String providerId, String providerUserId) {
         return (UserConnection) createCriteria()
-                .add(Restrictions.eq(USER_ID, userId))
                 .add(Restrictions.eq(PROVIDER_ID, providerId))
                 .add(Restrictions.eq(PROVIDER_USER_ID, providerUserId))
                 .uniqueResult();

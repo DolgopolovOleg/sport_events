@@ -109,7 +109,8 @@ public class UserConnectionRepositoryImpl implements ConnectionRepository {
     }
 
     public Connection<?> getConnection(ConnectionKey connectionKey) {
-        UserConnection socialUser = userConnectionDao.get(userId, connectionKey.getProviderId(), connectionKey.getProviderUserId());
+//        UserConnection socialUser = userConnectionDao.get(userId, connectionKey.getProviderId(), connectionKey.getProviderUserId());
+        UserConnection socialUser = userConnectionDao.get(connectionKey.getProviderId(), connectionKey.getProviderUserId());
         if (socialUser == null) {
             throw new NoSuchConnectionException(connectionKey);
         }
@@ -118,7 +119,8 @@ public class UserConnectionRepositoryImpl implements ConnectionRepository {
 
     public <A> Connection<A> getConnection(Class<A> apiType, String providerUserId) {
         String providerId = connectionFactoryLocator.getConnectionFactory(apiType).getProviderId();
-        UserConnection socialUser = userConnectionDao.get(userId, providerId, providerUserId);
+//        UserConnection socialUser = userConnectionDao.get(userId, providerId, providerUserId);
+        UserConnection socialUser = userConnectionDao.get(providerId, providerUserId);
         if (socialUser == null) {
             throw new NoSuchConnectionException(new ConnectionKey(providerId, providerUserId));
         }
@@ -211,7 +213,8 @@ public class UserConnectionRepositoryImpl implements ConnectionRepository {
     @Transactional(readOnly = false)
     public void updateConnection(Connection<?> connection) {
         ConnectionData connectionData = connection.createData();
-        UserConnection socialUser = userConnectionDao.get(userId, connectionData.getProviderId(), connectionData.getProviderUserId());
+//        UserConnection socialUser = userConnectionDao.get(userId, connectionData.getProviderId(), connectionData.getProviderUserId());
+        UserConnection socialUser = userConnectionDao.get(connectionData.getProviderId(), connectionData.getProviderUserId());
         if (socialUser != null) {
             socialUser.setDisplayName(connectionData.getDisplayName());
             socialUser.setProfileUrl(connectionData.getProfileUrl());
@@ -240,7 +243,8 @@ public class UserConnectionRepositoryImpl implements ConnectionRepository {
 
     @Transactional(readOnly = false)
     public void removeConnection(ConnectionKey connectionKey) {
-        UserConnection socialUser = userConnectionDao.get(userId, connectionKey.getProviderId(), connectionKey.getProviderUserId());
+//        UserConnection socialUser = userConnectionDao.get(userId, connectionKey.getProviderId(), connectionKey.getProviderUserId());
+        UserConnection socialUser = userConnectionDao.get(connectionKey.getProviderId(), connectionKey.getProviderUserId());
         if (socialUser != null) {
             userConnectionDao.delete(socialUser);
         }

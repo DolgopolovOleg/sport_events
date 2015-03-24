@@ -21,7 +21,7 @@ public interface UserConnectionDao  extends AbstractDao<UserConnection, Integer>
 
     public List<UserConnection> findByUserIdAndProviderUserIds(String userId, MultiValueMap<String, String> providerUserIds);
 
-    public UserConnection get(String userId, String providerId, String providerUserId);
+    public UserConnection get(String providerId, String providerUserId);
 
     public List<UserConnection> findPrimaryByUserIdAndProviderId(String userId, String providerId);
 

@@ -82,10 +82,17 @@
           class="org.springframework.social.connect.support.ConnectionFactoryRegistry">
         <beans:property name="connectionFactories">
             <beans:list>
+
                 <beans:bean class="org.springframework.social.facebook.connect.FacebookConnectionFactory">
                     <beans:constructor-arg value="${facebook.app.id}" />
                     <beans:constructor-arg value="${facebook.app.secret}" />
                 </beans:bean>
+
+                <beans:bean class="org.springframework.social.vkontakte.connect.VKontakteConnectionFactory">
+                    <beans:constructor-arg value="${vkontakte.app.id}" />
+                    <beans:constructor-arg value="${vkontakte.app.secret}" />
+                </beans:bean>
+
             </beans:list>
         </beans:property>
     </beans:bean>

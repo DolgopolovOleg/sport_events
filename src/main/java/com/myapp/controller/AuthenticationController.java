@@ -10,6 +10,7 @@ import com.myapp.utils.SecurityUtil;
 import org.apache.commons.collections.map.MultiValueMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.connect.*;
+import org.springframework.social.connect.support.OAuth2ConnectionFactory;
 import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 import org.springframework.social.oauth2.AccessGrant;
@@ -64,7 +65,8 @@ public class AuthenticationController {
 //        UserProfile socialMediaProfile = connection.fetchUserProfile();
 
         //TODO: handle wrong providerId
-        FacebookConnectionFactory connectionFactory = (FacebookConnectionFactory) connectionFactoryLocator.getConnectionFactory(providerId);
+//        FacebookConnectionFactory connectionFactory = (FacebookConnectionFactory) connectionFactoryLocator.getConnectionFactory(providerId);
+        OAuth2ConnectionFactory connectionFactory = (OAuth2ConnectionFactory) connectionFactoryLocator.getConnectionFactory(providerId);
         OAuth2Operations oauthOperations = connectionFactory.getOAuthOperations();
         OAuth2Parameters params = new OAuth2Parameters();
         params.setRedirectUri(buildRedirectUrl(request));
@@ -76,7 +78,8 @@ public class AuthenticationController {
     public String afterDanceActions(@PathVariable String providerId,
                                    @RequestParam("code") String authorizationCode,
                                    NativeWebRequest request){
-        FacebookConnectionFactory connectionFactory = (FacebookConnectionFactory) connectionFactoryLocator.getConnectionFactory("facebook");
+//        FacebookConnectionFactory connectionFactory = (FacebookConnectionFactory) connectionFactoryLocator.getConnectionFactory("facebook");
+        OAuth2ConnectionFactory connectionFactory = (OAuth2ConnectionFactory) connectionFactoryLocator.getConnectionFactory(providerId);
         OAuth2Operations oauthOperations = connectionFactory.getOAuthOperations();
         AccessGrant accessGrant = oauthOperations.exchangeForAccess(authorizationCode, buildRedirectUrl(request), null);
         Connection<Facebook> connection = connectionFactory.createConnection(accessGrant);
@@ -87,7 +90,8 @@ public class AuthenticationController {
         Boolean isNewConnection = false;
 
         try{
-            checkConnection = usersConnectionRepository.getConnection(connection.getKey());
+//            checkConnection = usersConnectionRepository.getConnection(connection.getKey());
+            checkConnection = userConnectionService.getConnection(connection.getKey());
         }catch(NoSuchConnectionException noSuchConnectionException){
             isNewConnection = true;
             checkConnection = null;
@@ -95,6 +99,7 @@ public class AuthenticationController {
 
         if(currentUser == null){
             // if user not exist
+            // authorize process
             if(isNewConnection){
                 // if connection not exist
                 currentUser = userService.createUserFromUserProfile(connection.fetchUserProfile());
@@ -118,9 +123,10 @@ public class AuthenticationController {
             // if user exist
             if(isNewConnection){
                 // if connection not exist
-                userConnectionService.createConnectionRepository(currentUser.get_id().toString()).addConnection(connection);
+                userConnectionService.addConnection(connection, currentUser.getUserId().toString());
             }else{
                 // if connection exist
+                // add error message "connection belongs to other user
             }
         }
 
@@ -139,5 +145,6 @@ public class AuthenticationController {
                 // save userconnection with userId
 
         return "redirect:/";
+
     }
 }

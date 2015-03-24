@@ -110,9 +110,10 @@ the FB.login() function when clicked.
 
 <div>Das ist header - ${title} |
     <sec:authorize access="isAnonymous()">
-        <a href="/login">Login</a> /
-        <a href="/user/register">Registration</a>
-        <a href="/authenticate/facebook">Facebook cennect</a>
+        <a href="/login">Login</a> |
+        <a href="/user/register">Registration</a> |
+        <a href="/authenticate/facebook">Facebook connect</a> |
+        <a href="/authenticate/vkontakte">Vkontakte connect</a>
     </sec:authorize>
 
     <sec:authorize access="isAuthenticated()">

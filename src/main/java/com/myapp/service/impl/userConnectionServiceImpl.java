@@ -91,13 +91,17 @@ public class UserConnectionServiceImpl implements UserConnectionService {
         socialUser.setProviderId(connectionData.getProviderId());
         socialUser.setProviderUserId(connectionData.getProviderUserId());
         socialUser.setRank(nextRank);
-        socialUser.setDisplayName(connectionData.getDisplayName());
+        String displayName = connectionData.getDisplayName() != null ?
+                connectionData.getDisplayName() :
+                connection.fetchUserProfile().getFirstName() + " " +  connection.fetchUserProfile().getLastName();
+        socialUser.setDisplayName(displayName);
         socialUser.setProfileUrl(connectionData.getProfileUrl());
 
         String pic = connectionData.getImageUrl();
 
 
         socialUser.setImageUrl(pic);
+
 //        if(connectionData.getProviderId().equals(vk){
 //            //this setup will be done in postsignup
 //            socialUser.setImageUrl(pic);
@@ -125,8 +129,44 @@ public class UserConnectionServiceImpl implements UserConnectionService {
 
     }
 
+    @Override
+    public Connection<?> getConnection(ConnectionKey connectionKey) {
+        UserConnection socialUser = userConnectionDao.get(connectionKey.getProviderId(), connectionKey.getProviderUserId());
+        if (socialUser == null) {
+            throw new NoSuchConnectionException(connectionKey);
+        }
+        return createConnection(toConnectionData(socialUser));
+    }
+
+    private Connection<?> createConnection(ConnectionData connectionData) {
+        ConnectionFactory<?> connectionFactory = connectionFactoryLocator.getConnectionFactory(connectionData.getProviderId());
+        return connectionFactory.createConnection(connectionData);
+    }
+
+    private ConnectionData toConnectionData(UserConnection socialUser) {
+        return new ConnectionData(socialUser.getProviderId(),
+                socialUser.getProviderUserId(),
+                socialUser.getDisplayName(),
+                socialUser.getProfileUrl(),
+                socialUser.getImageUrl(),
+
+                decrypt(socialUser.getAccessToken()),
+                decrypt(socialUser.getSecret()),
+                decrypt(socialUser.getRefreshToken()),
+
+                convertZeroToNull(socialUser.getExpireTime()));
+    }
+
     private String encrypt(String text) {
         return (textEncryptor != null && text != null) ? textEncryptor.encrypt(text) : text;
+    }
+
+    private String decrypt(String encryptedText) {
+        return (textEncryptor != null && encryptedText != null) ? textEncryptor.decrypt(encryptedText) : encryptedText;
+    }
+
+    private Long convertZeroToNull(Long expireTime) {
+        return (expireTime != null && expireTime == 0 ? null : expireTime);
     }
 
 }
