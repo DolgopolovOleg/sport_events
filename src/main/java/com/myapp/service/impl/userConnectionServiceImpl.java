@@ -138,6 +138,11 @@ public class UserConnectionServiceImpl implements UserConnectionService {
         return createConnection(toConnectionData(socialUser));
     }
 
+    @Override
+    public String findUserIdByConnection(Connection connection) {
+        return null;
+    }
+
     private Connection<?> createConnection(ConnectionData connectionData) {
         ConnectionFactory<?> connectionFactory = connectionFactoryLocator.getConnectionFactory(connectionData.getProviderId());
         return connectionFactory.createConnection(connectionData);
